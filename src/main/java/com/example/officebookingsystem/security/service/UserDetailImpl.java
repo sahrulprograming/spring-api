@@ -56,10 +56,9 @@ public class UserDetailImpl implements UserDetails {
         return password;
     }
 
-
     @Override
     public String getUsername() {
-        return username;
+        return email;
     }
 
     @Override
@@ -90,4 +89,8 @@ public class UserDetailImpl implements UserDetails {
         UserDetailImpl user = (UserDetailImpl) o;
         return Objects.equals(id, user.id);
     }
+    public void setEmail(String email){
+        this.email = email;
+    }
+
 }
