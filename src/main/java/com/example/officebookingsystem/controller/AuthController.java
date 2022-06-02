@@ -20,6 +20,7 @@ import com.example.officebookingsystem.domain.repository.UserRepository;
 import com.example.officebookingsystem.security.jwt.JwtUtils;
 import com.example.officebookingsystem.domain.implementation.UserDetailImpl;
 
+import com.example.officebookingsystem.service.AuthService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.ResponseCookie;
@@ -45,74 +46,24 @@ import io.swagger.annotations.ApiOperation;
 @Api(tags = "Auth Controller", description = "Authentication")
 public class AuthController {
     @Autowired
-    AuthenticationManager authenticationManager;
-    @Autowired
-    UserRepository userRepository;
-    @Autowired
-    RoleRepository roleRepository;
+    AuthService authService;
+
     @Autowired
     PasswordEncoder passwordEncoder;
+
     @Autowired
     JwtUtils jwtUtils;
 
     @ApiOperation(value = "01 Signin", notes = "Endpoint untuk login ")
     @PostMapping("/signin")
     public ResponseEntity<?> authenticateUser(@Valid @RequestBody LoginRequest loginRequest) {
-        Authentication authentication = authenticationManager
-                .authenticate(new UsernamePasswordAuthenticationToken(loginRequest.getUsername(), loginRequest.getPassword()));
-        SecurityContextHolder.getContext().setAuthentication(authentication);
-        UserDetailImpl userDetail = (UserDetailImpl) authentication.getPrincipal();
-        ResponseCookie jwtCookie = jwtUtils.generateJwtCookie(userDetail);
-        List<String> roles = userDetail.getAuthorities().stream()
-                .map(item -> item.getAuthority())
-                .collect(Collectors.toList());
-        return ResponseEntity.ok().header(HttpHeaders.SET_COOKIE, jwtCookie.toString())
-                .body(new UserInfoResponse(
-                        userDetail.getId(),
-                        userDetail.getUsername(),
-                        userDetail.getEmail(),
-                        roles
-                ));
+       return authService.signIn(loginRequest);
     }
 
     @ApiOperation(value = "01 Signup", notes = "Endpoint untuk mendaftar ")
     @PostMapping("/signup")
     public ResponseEntity<?> registerUser(@Valid @RequestBody SignupRequest signupRequest) {
-        if (userRepository.existsByUsername(signupRequest.getUsername())) {
-            return ResponseEntity.badRequest().body(new MessageResponse("Error:Username is Already taken"));
-        }
-        if (userRepository.existsByEmail(signupRequest.getEmail())) {
-            return ResponseEntity.badRequest().body(new MessageResponse("Error: Email is Already in User !"));
-        }
-        User user = new User(
-                signupRequest.getUsername(),
-                signupRequest.getEmail(),
-                passwordEncoder.encode(signupRequest.getPassword()));
-
-        Set<String> strRoles = signupRequest.getRole();
-        Set<Role> roles = new HashSet<>();
-        if (strRoles == null) {
-            Role userRole = roleRepository.findByName(ERole.ROLE_USER)
-                    .orElseThrow(() -> new RuntimeException("Error: Role is not found."));
-            roles.add(userRole);
-        } else {
-            strRoles.forEach(role -> {
-                        if (Objects.equals(role, "admin")) {
-                            Role adminRole = roleRepository.findByName(ERole.ROLE_ADMIN)
-                                    .orElseThrow(() -> new RuntimeException("Error: Role is not found."));
-                            roles.add(adminRole);
-                        } else {
-                            Role userRole = roleRepository.findByName(ERole.ROLE_USER)
-                                    .orElseThrow(() -> new RuntimeException("Error: Role is not found"));
-                            roles.add(userRole);
-                        }
-                        ;
-                    }
-            );
-        }
-            user.setRoles(roles);
-            userRepository.save(user);
-            return ResponseEntity.ok(new MessageResponse("User registered successfully!"));
+        return authService.signUp(signupRequest);
     }
 
     @ApiOperation(value = "01 Signout", notes = "Endpoint untuk logout ")
