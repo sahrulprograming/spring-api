@@ -1,6 +1,6 @@
 package com.example.officebookingsystem.security.jwt;
 
-import com.example.officebookingsystem.security.service.UserDetailServiceImpl;
+import com.example.officebookingsystem.service.UserDetailServiceImpl;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;

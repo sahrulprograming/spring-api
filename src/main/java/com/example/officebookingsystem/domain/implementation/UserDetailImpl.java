@@ -1,4 +1,4 @@
-package com.example.officebookingsystem.security.service;
+package com.example.officebookingsystem.domain.implementation;
 
 import com.example.officebookingsystem.domain.entity.User;
 import com.fasterxml.jackson.annotation.JsonIgnore;
@@ -23,8 +23,7 @@ public class UserDetailImpl implements UserDetails {
     private String password;
     private Collection<? extends GrantedAuthority> authorities;
 
-    public UserDetailImpl(Long id, String username, String email, String password,
-                          Collection<? extends GrantedAuthority> authorities) {
+    public UserDetailImpl(Long id, String username, String email, String password,Collection<? extends GrantedAuthority> authorities) {
         this.id = id;
         this.username = username;
         this.email = email;
