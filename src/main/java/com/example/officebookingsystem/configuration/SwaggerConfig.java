@@ -20,7 +20,7 @@ import springfox.documentation.swagger2.annotations.EnableSwagger2;
 
 @Configuration
 @EnableSwagger2
-public class Swagger {
+public class SwaggerConfig {
     private static final String SECURITY_REFERENCE = "Token Access";
     private static final String AUTHORIZATION = "Authorization";
     private static final String AUTHORIZATION_DESCRIPTION = "JWT Token is required to access the API.";
@@ -48,16 +48,16 @@ public class Swagger {
     }
 
     public ApiInfo apiInfo() {
-        return new ApiInfo(this.API_TITLE, this.API_DESCRIPTION, this.API_VERSION, this.TERM_OF_SERVICE, contact(), this.LICENSE, this.LICENSE_URL,
+        return new ApiInfo(API_TITLE, API_DESCRIPTION, API_VERSION, TERM_OF_SERVICE, contact(), LICENSE, LICENSE_URL,
                 Collections.emptyList());
     }
 
     private Contact contact() {
-        return new Contact(this.CONTACT_NAME, this.CONTACT_URL, this.CONTACT_EMAIL);
+        return new Contact(CONTACT_NAME, CONTACT_URL, CONTACT_EMAIL);
     }
 
     private ApiKey apiKey() {
-        return new ApiKey(this.SECURITY_REFERENCE, this.AUTHORIZATION,
+        return new ApiKey(SECURITY_REFERENCE, AUTHORIZATION,
                 io.swagger.v3.oas.models.security.SecurityScheme.In.HEADER.name());
     }
 
