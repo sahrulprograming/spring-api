@@ -25,10 +25,10 @@ public class SwaggerConfig {
     private static final String AUTHORIZATION = "Authorization";
     private static final String AUTHORIZATION_DESCRIPTION = "JWT Token is required to access the API.";
     private static final String AUTHORIZATION_SCOPE = "Unlimited";
-    private static final String CONTACT_EMAIL = "contact@gmail.com";
+    private static final String CONTACT_EMAIL = "mgpmichael@gmail.com (+62 8127 6522)";
     private static final String CONTACT_URL = "";
-    private static final String CONTACT_NAME = "Name";
-    private static final String API_TITLE = "API Title";
+    private static final String CONTACT_NAME = ": Michael MGP Simatupang";
+    private static final String API_TITLE = "API Office Booking System";
     private static final String API_DESCRIPTION = "API Description";
     private static final String TERM_OF_SERVICE = "";
     private static final String API_VERSION = "1.0";
