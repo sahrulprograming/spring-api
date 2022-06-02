@@ -25,11 +25,11 @@ public class Swagger {
     private static final String AUTHORIZATION = "Authorization";
     private static final String AUTHORIZATION_DESCRIPTION = "JWT Token is required to access the API.";
     private static final String AUTHORIZATION_SCOPE = "Unlimited";
-    private static final String CONTACT_EMAIL = "nadilaandika1002@gmail.com";
+    private static final String CONTACT_EMAIL = "contact@gmail.com";
     private static final String CONTACT_URL = "";
-    private static final String CONTACT_NAME = "Nadila Andika Rahma";
-    private static final String API_TITLE = "API Sync Your Majors";
-    private static final String API_DESCRIPTION = "API ini menyediakan informasi tentang jurusan perkuliahan berbagai universitas. <br><br> <h3>📢 Untuk mengakses endpoint CRUD harus menggunakan 🔒`API KEY`🔒 anda dapat membuatnya pada endpoint 🗝️Authentification </h3>";
+    private static final String CONTACT_NAME = "Name";
+    private static final String API_TITLE = "API Title";
+    private static final String API_DESCRIPTION = "API Description";
     private static final String TERM_OF_SERVICE = "";
     private static final String API_VERSION = "1.0";
     private static final String LICENSE = "Apache License 2.0";
@@ -42,22 +42,22 @@ public class Swagger {
                 .securityContexts(Collections.singletonList(securityContext()))
                 .securitySchemes(Collections.singletonList(apiKey()))
                 .select()
-                .apis(RequestHandlerSelectors.basePackage("com.sym.controllers"))
+                .apis(RequestHandlerSelectors.basePackage("com.example.officebookingsystem.controller"))
                 .paths(PathSelectors.regex(SECURE_PATH))
                 .build();
     }
 
     public ApiInfo apiInfo() {
-        return new ApiInfo(API_TITLE, API_DESCRIPTION, API_VERSION, TERM_OF_SERVICE, contact(), LICENSE, LICENSE_URL,
+        return new ApiInfo(this.API_TITLE, this.API_DESCRIPTION, this.API_VERSION, this.TERM_OF_SERVICE, contact(), this.LICENSE, this.LICENSE_URL,
                 Collections.emptyList());
     }
 
     private Contact contact() {
-        return new Contact(CONTACT_NAME, CONTACT_URL, CONTACT_EMAIL);
+        return new Contact(this.CONTACT_NAME, this.CONTACT_URL, this.CONTACT_EMAIL);
     }
 
     private ApiKey apiKey() {
-        return new ApiKey(SECURITY_REFERENCE, AUTHORIZATION,
+        return new ApiKey(this.SECURITY_REFERENCE, this.AUTHORIZATION,
                 io.swagger.v3.oas.models.security.SecurityScheme.In.HEADER.name());
     }
 
