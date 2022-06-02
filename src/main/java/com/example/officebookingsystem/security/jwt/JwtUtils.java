@@ -1,6 +1,6 @@
 package com.example.officebookingsystem.security.jwt;
 
-import com.example.officebookingsystem.security.service.UserDetailImpl;
+import com.example.officebookingsystem.domain.implementation.UserDetailImpl;
 import io.jsonwebtoken.*;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;

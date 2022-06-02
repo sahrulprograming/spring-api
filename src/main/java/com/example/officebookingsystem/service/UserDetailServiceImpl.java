@@ -1,6 +1,7 @@
-package com.example.officebookingsystem.security.service;
+package com.example.officebookingsystem.service;
 
 import com.example.officebookingsystem.domain.entity.User;
+import com.example.officebookingsystem.domain.implementation.UserDetailImpl;
 import com.example.officebookingsystem.domain.repository.UserRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.userdetails.UserDetails;

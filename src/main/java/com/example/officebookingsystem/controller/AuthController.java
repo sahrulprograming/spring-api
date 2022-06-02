@@ -18,7 +18,7 @@ import com.example.officebookingsystem.domain.model.ERole;
 import com.example.officebookingsystem.domain.repository.RoleRepository;
 import com.example.officebookingsystem.domain.repository.UserRepository;
 import com.example.officebookingsystem.security.jwt.JwtUtils;
-import com.example.officebookingsystem.security.service.UserDetailImpl;
+import com.example.officebookingsystem.domain.implementation.UserDetailImpl;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpHeaders;

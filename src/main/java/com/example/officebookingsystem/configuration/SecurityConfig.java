@@ -2,7 +2,7 @@ package com.example.officebookingsystem.configuration;
 
 import com.example.officebookingsystem.security.jwt.AuthEntryPointJwt;
 import com.example.officebookingsystem.security.jwt.AuthTokenFilter;
-import com.example.officebookingsystem.security.service.UserDetailServiceImpl;
+import com.example.officebookingsystem.service.UserDetailServiceImpl;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
