@@ -55,7 +55,7 @@ public class AuthService {
         return ResponseEntity.ok().header(HttpHeaders.SET_COOKIE, jwtCookie.toString())
                 .body(new UserInfoResponse(
                         userDetail.getId(),
-                        userDetail.getUsername(),
+                        userDetail.getName(),
                         userDetail.getEmail(),
                         roles
                 ));
@@ -85,12 +85,17 @@ public class AuthService {
                             Role adminRole = roleRepository.findByName(ERole.ROLE_ADMIN)
                                     .orElseThrow(() -> new RuntimeException("Error: Role is not found."));
                             roles.add(adminRole);
-                        } else {
+                        }
+                        if (Objects.equals(role, "user")){
                             Role userRole = roleRepository.findByName(ERole.ROLE_USER)
                                     .orElseThrow(() -> new RuntimeException("Error: Role is not found"));
                             roles.add(userRole);
                         }
-                        ;
+                        else {
+                            RuntimeException e = new RuntimeException("Error: Role is not found");
+                            throw e;
+
+                        }
                     }
             );
         }

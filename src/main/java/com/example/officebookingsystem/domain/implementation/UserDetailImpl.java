@@ -79,6 +79,14 @@ public class UserDetailImpl implements UserDetails {
     public boolean isEnabled() {
         return true;
     }
+
+
+    public String getName(){ return  username;}
+    public void setName(String email){
+        this.email = email;
+    }
+
+
     @Override
     public boolean equals(Object o) {
         if (this == o)
