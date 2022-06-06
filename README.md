@@ -24,7 +24,7 @@ here are some of the tech we use :
 13. Junit
 
 ## Entity Relation Diagram
-![ERD](lhttps://github.com/Kel2-Kanbo/Backend/blob/master/picture/office_Booking_System.png)
+![ERD](https://github.com/Kel2-Kanbo/Backend/blob/master/picture/office_Booking_System.png)
 
 ## CI/CD Process
 ![CICD](https://github.com/Kel2-Kanbo/Backend/blob/master/picture/CICD%20Process.png)
