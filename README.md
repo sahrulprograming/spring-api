@@ -1,6 +1,6 @@
 ## These are some documentations of Office Booking System Backend Development
 
-Desc : The goal of this project to develop a web-based platform to rent office spaces across jakarta. Sewa kantor aims for the convenience of user when searching for suitable working space in jakarta's bussines distrct
+Desc : The goal of this project is to develop a web-based platform to rent office spaces across jakarta. Sewa kantor aims for the convenience of user when searching for suitable working space in jakarta's bussines distrct
 areas. is also important for the business to manage listings, customers, and marketing & negotiation history for managerial purposes. This project is eam project which consist of UI/UX Designer, FrontEnd Engineers, Backend
 Engineers, Mobile Engineer, and Quality Assurances. I lead 3 backend members to develop the backend development for the application. In this ongoing we've been implement the JWT to perform a Role Authentication
 Security. the Key Activities or the MVP's from this application is the customer can Search for the building, Register, Write Review, and Book office. meanwhile, the Admin can manage the customer data, office unit, buildings
