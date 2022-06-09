@@ -10,6 +10,7 @@ import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
@@ -23,7 +24,7 @@ import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
 
 @RestController
-@RequestMapping("/api/buildings")
+@RequestMapping("/api/page")
 @Api(tags = "Buildings Controller", description = "Buildings")
 public class BuildingController {
     @Autowired
@@ -31,7 +32,7 @@ public class BuildingController {
 
     // Create buildings
     @ApiOperation(value = "Create Building", notes = "Endpoint for creating building")
-    @PostMapping("/")
+    @PostMapping("/admin/building/create")
     // @PreAuthorize("hasRole('ADMIN')")
     public ResponseEntity<ResponseData<Building>> createBuilding(@Valid @RequestBody BuildingRequest buildingRequest) {
         return buildingService.create(buildingRequest);
@@ -39,7 +40,7 @@ public class BuildingController {
 
     // Find all buildings
     @ApiOperation(value = "Get All Buildings", notes = "Endpoint for get all buildings")
-    @GetMapping("/")
+    @GetMapping("/admin/building")
     // @PreAuthorize("hasRole('USER') or hasRole('ADMIN')")
     public ResponseEntity<ResponseData<List<Building>>> findAllBuilding() {
         return buildingService.findAll();
@@ -47,23 +48,24 @@ public class BuildingController {
 
     // Find building by id
     @ApiOperation(value = "Get Building By Id", notes = "Endpoint for get building by id")
-    @GetMapping("/{id}")
+    @GetMapping("/admin/building/{id}")
     // @PreAuthorize("hasRole('USER') or hasRole('ADMIN')")
     public ResponseEntity<ResponseData<Building>> findBuildingById(@PathVariable("id") Long id) {
         return buildingService.findById(id);
     }
 
-    //update building
+    // update building
     @ApiOperation(value = "Update Building", notes = "Endpoint for update building")
-    @PostMapping("/{id}")
+    @PutMapping("/admin/building/{id}")
     // @PreAuthorize("hasRole('ADMIN')")
-    public ResponseEntity<ResponseData<Building>> updateBuilding(@PathVariable("id") Long id, @Valid @RequestBody BuildingRequest buildingRequest) {
+    public ResponseEntity<ResponseData<Building>> updateBuilding(@PathVariable("id") Long id,
+            @Valid @RequestBody BuildingRequest buildingRequest) {
         return buildingService.update(id, buildingRequest);
     }
 
     // Delete building
     @ApiOperation(value = "Delete Building", notes = "Endpoint for delete building")
-    @DeleteMapping("/{id}")
+    @DeleteMapping("/admin/building/{id}")
     // @PreAuthorize("hasRole('ADMIN')")
     public ResponseEntity<?> deleteBuilding(@PathVariable("id") Long id) {
         return buildingService.deleteOne(id);
