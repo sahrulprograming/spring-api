@@ -29,7 +29,7 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
     private AuthEntryPointJwt unauthorizedHandler;
 
     @Bean
-    public AuthTokenFilter authenticationJwtTokenFilter(){
+    public AuthTokenFilter authenticationJwtTokenFilter() {
         return new AuthTokenFilter();
     }
 
@@ -57,7 +57,6 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
             "/webjars/**",
             // url auth
             "/api/auth/**",
-            "/api/buildings/**",
     };
 
     @Override

@@ -6,7 +6,6 @@ import javax.validation.Valid;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
-import org.springframework.validation.Errors;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -18,7 +17,6 @@ import org.springframework.web.bind.annotation.RestController;
 import com.example.officebookingsystem.domain.dto.request.BuildingRequest;
 import com.example.officebookingsystem.domain.dto.response.ResponseData;
 import com.example.officebookingsystem.domain.entity.Building;
-import com.example.officebookingsystem.domain.helpers.ResponseHelper;
 import com.example.officebookingsystem.service.BuildingService;
 
 import io.swagger.annotations.Api;
@@ -30,9 +28,6 @@ import io.swagger.annotations.ApiOperation;
 public class BuildingController {
     @Autowired
     private BuildingService buildingService;
-
-    @Autowired
-    private ResponseHelper responseHelper;
 
     // Create buildings
     @ApiOperation(value = "Create Building", notes = "Endpoint for creating building")
