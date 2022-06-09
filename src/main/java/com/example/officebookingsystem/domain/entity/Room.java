@@ -1,5 +1,6 @@
 package com.example.officebookingsystem.domain.entity;
 
+import com.example.officebookingsystem.domain.model.EStatus;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
@@ -37,4 +38,6 @@ public class Room {
     private String thumbnailUrl;
 
     private String description;
+
+    private EStatus status;
 }
