@@ -13,7 +13,7 @@ public class ComplexService {
     @Autowired
     private ComplexRepository complexRepository;
 
-    public void creatComplex (Complex complex){
+    public void createComplex (Complex complex){
 
         complexRepository.save(complex);
     }
@@ -22,7 +22,5 @@ public class ComplexService {
         return complexRepository.findAll();
     }
 
-    public List<Complex>  complexName(){
-        return complexRepository
-    }
+
 }
