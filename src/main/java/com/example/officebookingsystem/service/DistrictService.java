@@ -1,37 +1,22 @@
 package com.example.officebookingsystem.service;
-<<<<<<< HEAD
 
 import com.example.officebookingsystem.domain.dto.response.DistrictResponse;
 import com.example.officebookingsystem.domain.entity.District;
-=======
 import com.example.officebookingsystem.domain.dto.request.DistrictCreateRequest;
 import com.example.officebookingsystem.domain.dto.response.DistrictCreateResponse;
 import com.example.officebookingsystem.domain.dto.response.MessageResponse;
 import com.example.officebookingsystem.domain.entity.City;
 import com.example.officebookingsystem.domain.entity.District;
 import com.example.officebookingsystem.domain.repository.CityRepository;
->>>>>>> 3d11ab2fbbd9c757f0aa11ec800da6146a32a92d
 import com.example.officebookingsystem.domain.repository.DistrictRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
-<<<<<<< HEAD
-
-@Service
-public class DistrictService {
-
-//    @Autowired
-//    private DistrictRepository districtRepository;
-//
-//    public ResponseEntity<List<DistrictResponse>> listOfDistrict(){
-//
-//        return ResponseEntity.ok(districtRepository.findAll());
-//    }
-}
-=======
 import java.util.Optional;
+
+
 @Service
 public class DistrictService {
     @Autowired
@@ -69,4 +54,3 @@ public class DistrictService {
     }
 }
 
->>>>>>> 3d11ab2fbbd9c757f0aa11ec800da6146a32a92d
