@@ -17,8 +17,20 @@ import javax.persistence.*;
 )
 public class District {
     @Id
-    @GeneratedValue
+    @SequenceGenerator(
+            name = "district_sequence",
+            sequenceName = "district_sequence",
+            allocationSize = 1
+    )
+    @GeneratedValue(
+            strategy = GenerationType.SEQUENCE,
+            generator = "district_sequence"
+    )
     private Long id;
+
+    @ManyToOne
+    @JoinColumn(name = "city_id")
+    private City city;
 
     private String name;
 }

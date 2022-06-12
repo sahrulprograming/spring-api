@@ -18,7 +18,15 @@ import javax.validation.constraints.NotBlank;
 )
 public class Building {
     @Id
-    @GeneratedValue
+    @SequenceGenerator(
+            name = "building_sequence",
+            sequenceName = "building_sequence",
+            allocationSize = 1
+    )
+    @GeneratedValue(
+            strategy = GenerationType.SEQUENCE,
+            generator = "building_sequence"
+    )
     private Long id;
 
     @ManyToOne

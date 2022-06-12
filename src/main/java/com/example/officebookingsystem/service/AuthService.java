@@ -81,21 +81,20 @@ public class AuthService {
             roles.add(userRole);
         } else {
             strRoles.forEach(role -> {
-                        if (Objects.equals(role, "admin")) {
-                            Role adminRole = roleRepository.findByName(ERole.ROLE_ADMIN)
-                                    .orElseThrow(() -> new RuntimeException("Error: Role is not found."));
-                            roles.add(adminRole);
-                        }
-                        if (Objects.equals(role, "user")){
-                            Role userRole = roleRepository.findByName(ERole.ROLE_USER)
-                                    .orElseThrow(() -> new RuntimeException("Error: Role is not found"));
-                            roles.add(userRole);
-                        }
-                        else {
-                            RuntimeException e = new RuntimeException("Error: Role is not found");
-                            throw e;
-
-                        }
+                switch (role) {
+                    case "admin":
+                        Role adminRole = roleRepository.findByName(ERole.ROLE_ADMIN)
+                                .orElseThrow(() -> new RuntimeException("Error: Role is not found."));
+                        roles.add(adminRole);
+                        break;
+                    case "user":
+                        Role userRole = roleRepository.findByName(ERole.ROLE_USER)
+                                .orElseThrow(() -> new RuntimeException("Error: Role is not found."));
+                        roles.add(userRole);
+                        break;
+                    default:
+                        throw new IllegalStateException("Unexpected value: " + role);
+                }
                     }
             );
         }
