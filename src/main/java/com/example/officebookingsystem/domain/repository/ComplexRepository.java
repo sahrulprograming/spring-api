@@ -12,8 +12,8 @@ import java.util.List;
 @Repository
 public interface ComplexRepository extends JpaRepository<Complex, Long> {
 
-    List<Complex> findComplexByDistrict(District district);
-
-
-    List<Complex> findComplexByComplexName(String name);
+//    List<Complex> findComplexByDistrict(District district);
+//
+//
+//    List<Complex> findComplexByComplexName(String name);
 }
