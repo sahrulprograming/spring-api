@@ -6,6 +6,7 @@ import javax.validation.Valid;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -33,7 +34,7 @@ public class BuildingController {
     // Create buildings
     @ApiOperation(value = "Create Building", notes = "Endpoint for admin creating building")
     @PostMapping("/admin/building/create")
-    // @PreAuthorize("hasRole('ADMIN')")
+    @PreAuthorize("hasRole('ADMIN')")
     public ResponseEntity<?> createBuilding(@Valid @RequestBody BuildingRequest buildingRequest) {
         return buildingService.create(buildingRequest);
     }
@@ -41,7 +42,7 @@ public class BuildingController {
     // Find all buildings
     @ApiOperation(value = "Get All Buildings", notes = "Endpoint for admin get all buildings")
     @GetMapping("/admin/building")
-    // @PreAuthorize("hasRole('USER') or hasRole('ADMIN')")
+    @PreAuthorize("hasRole('USER') or hasRole('ADMIN')")
     public ResponseEntity<List<BuildingResponse>> findAllBuilding() {
         return buildingService.adminFindAll();
     }
