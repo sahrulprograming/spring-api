@@ -1,7 +1,6 @@
 package com.example.officebookingsystem.controller;
 import com.example.officebookingsystem.domain.dto.request.ComplexCreateRequest;
 import com.example.officebookingsystem.domain.dto.response.ComplexResponse;
-import com.example.officebookingsystem.domain.dto.response.ResponseData;
 import com.example.officebookingsystem.service.ComplexService;
 import io.swagger.annotations.ApiOperation;
 import org.springframework.beans.factory.annotation.Autowired;

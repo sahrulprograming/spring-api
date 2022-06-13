@@ -18,7 +18,7 @@ public class DistrictController {
     @PreAuthorize("hasRole('ADMIN')")
     @ApiOperation(value = "Create District", notes = "Endpoint for Creating District by City")
     public ResponseEntity<?> createDistrict(@RequestBody DistrictCreateRequest districtCreateRequest){
-       return districtService.createDistrict(districtCreateRequest);
+        return districtService.createDistrict(districtCreateRequest);
     }
 
     @GetMapping("/district/list/{id}")
