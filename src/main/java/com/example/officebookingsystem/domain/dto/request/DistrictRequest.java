@@ -1,6 +1,5 @@
 package com.example.officebookingsystem.domain.dto.request;
 
-import jdk.jfr.Name;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;

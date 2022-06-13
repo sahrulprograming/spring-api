@@ -57,7 +57,6 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
             "/webjars/**",
             // url auth
             "/api/auth/**",
-            "/api/page/**",
     };
 
     @Override

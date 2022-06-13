@@ -82,7 +82,7 @@ public class BuildingService {
         return ResponseEntity.ok().body(building.get());
     }
 
-    // Update Building Service
+    // Service Update Building
     public ResponseEntity<Building> update(Long id, BuildingRequest buildingRequest) {
         Optional<Building> building = buildingRepository.findById(id);
         if (building == null) {
@@ -97,6 +97,7 @@ public class BuildingService {
         return ResponseEntity.status(HttpStatus.OK).body(building.get());
     }
 
+    // Service deleteOne Building
     public ResponseEntity<?> deleteOne(Long id) {
         if (buildingRepository.existsById(id) == false) {
             return ResponseEntity.status(HttpStatus.NOT_FOUND)
@@ -105,5 +106,14 @@ public class BuildingService {
         buildingRepository.deleteById(id);
         return ResponseEntity.status(HttpStatus.OK)
                 .body(new MessageResponse("Success:Building with id " + id + " deleted"));
+    }
+
+    // Service Get Building By Complex Id
+    public ResponseEntity<List<Building>> adminFindByComplexId(Long id) {
+        List<Building> building = buildingRepository.findByComplexId(id);
+        if (building.isEmpty()) {
+            return ResponseEntity.status(HttpStatus.NOT_FOUND).body(null);
+        }
+        return ResponseEntity.status(HttpStatus.OK).body(building);
     }
 }
