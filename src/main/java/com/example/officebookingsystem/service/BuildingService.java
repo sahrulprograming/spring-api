@@ -1,6 +1,8 @@
 package com.example.officebookingsystem.service;
 
+import java.util.ArrayList;
 import java.util.List;
+import java.util.Optional;
 
 import javax.transaction.Transactional;
 
@@ -10,11 +12,12 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
 
 import com.example.officebookingsystem.domain.dto.request.BuildingRequest;
-import com.example.officebookingsystem.domain.dto.response.ResponseData;
+import com.example.officebookingsystem.domain.dto.response.BuildingResponse;
+import com.example.officebookingsystem.domain.dto.response.MessageResponse;
 import com.example.officebookingsystem.domain.entity.Building;
-import com.example.officebookingsystem.domain.helpers.ResponseHelper;
 import com.example.officebookingsystem.domain.repository.BuildingRepository;
 import com.example.officebookingsystem.domain.repository.ComplexRepository;
+import com.example.officebookingsystem.domain.repository.RoomRepository;
 
 @Service
 @Transactional
@@ -26,13 +29,12 @@ public class BuildingService {
     private ComplexRepository complexRepository;
 
     @Autowired
-    private ResponseHelper responseHelper;
+    private RoomRepository roomRepository;
 
     // Service Create Building
-    public ResponseEntity<ResponseData<Building>> create(BuildingRequest buildingRequest) {
+    public ResponseEntity<?> create(BuildingRequest buildingRequest) {
         if (buildingRepository.existsByName(buildingRequest.getName())) {
-            return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(
-                    responseHelper.response(HttpStatus.BAD_REQUEST.value(), "Error:Building is Already taken", null));
+            return ResponseEntity.badRequest().body(new MessageResponse("Error:Username is Already taken"));
         }
         Building building = new Building();
         building.setName(buildingRequest.getName());
@@ -41,55 +43,67 @@ public class BuildingService {
         if (buildingRequest.getIdComplex() != null) {
             building.setComplex(complexRepository.findById(buildingRequest.getIdComplex()).get());
         }
-        return ResponseEntity.status(HttpStatus.CREATED).body(responseHelper.response(HttpStatus.CREATED.value(),
-                "Building Created Successfully", buildingRepository.save(building)));
+        return ResponseEntity.ok().body(buildingRepository.save(building));
     }
 
-    public ResponseEntity<ResponseData<List<Building>>> findAll() {
+    // Service Find All Buildings
+    public ResponseEntity<List<BuildingResponse>> adminFindAll() {
         List<Building> building = buildingRepository.findAll();
-        if (building.isEmpty()) {
-            return ResponseEntity.status(HttpStatus.NOT_FOUND)
-                    .body(responseHelper.response(HttpStatus.NOT_FOUND.value(), "Error:Building Not Found", null));
+        List<BuildingResponse> buildingResponse = new ArrayList<>();
+        for (Building b : building) {
+            BuildingResponse br = new BuildingResponse();
+            br.setBuildingName(b.getName());
+            if (b.getComplex() != null) {
+                // mengambil nama complex berdasarkan index building
+                br.setComplexName(b.getComplex().getComplexName());
+                // mengambil alamat pada complex berdasarkan index building
+                br.setComplexAdress(b.getComplex().getAddress());
+            }
+            // mengambil jumlah room pada building
+            Integer numOfRooms = roomRepository.countByBuilding(b);
+            if (numOfRooms != null) {
+                br.setNumOfRooms(numOfRooms);
+            }
+            br.setDescription(b.getDescription());
+            buildingResponse.add(br);
         }
-        return ResponseEntity.status(HttpStatus.OK)
-                .body(responseHelper.response(HttpStatus.OK.value(), "Success", building));
+        if (building.isEmpty()) {
+            return ResponseEntity.status(HttpStatus.NOT_FOUND).body(null);
+        }
+        return ResponseEntity.status(HttpStatus.OK).body(buildingResponse);
     }
 
-    public ResponseEntity<ResponseData<Building>> findById(Long id) {
-        Building building = buildingRepository.findById(id).get();
-        if (building == null) {
-            return ResponseEntity.status(HttpStatus.NOT_FOUND)
-                    .body(responseHelper.response(HttpStatus.NOT_FOUND.value(), "Error:Building Not Found", null));
+    // Service Get Building By Id
+    public ResponseEntity<Building> findById(Long id) {
+        Optional<Building> building = buildingRepository.findById(id);
+        if (building.isPresent() == false) {
+            return ResponseEntity.status(HttpStatus.NOT_FOUND).body(null);
         }
-        return ResponseEntity.status(HttpStatus.OK)
-                .body(responseHelper.response(HttpStatus.OK.value(), "Success", building));
+        return ResponseEntity.ok().body(building.get());
     }
 
     // Update Building Service
-    public ResponseEntity<ResponseData<Building>> update(Long id, BuildingRequest buildingRequest) {
-        Building building = buildingRepository.findById(id).get();
+    public ResponseEntity<Building> update(Long id, BuildingRequest buildingRequest) {
+        Optional<Building> building = buildingRepository.findById(id);
         if (building == null) {
-            return ResponseEntity.status(HttpStatus.NOT_FOUND)
-                    .body(responseHelper.response(HttpStatus.NOT_FOUND.value(), "Error:Building Not Found", null));
+            return ResponseEntity.status(HttpStatus.NOT_FOUND).body(null);
         }
-        building.setName(buildingRequest.getName());
-        building.setAddress(buildingRequest.getAddress());
-        building.setDescription(buildingRequest.getDescription());
+        building.get().setName(buildingRequest.getName());
+        building.get().setAddress(buildingRequest.getAddress());
+        building.get().setDescription(buildingRequest.getDescription());
         if (buildingRequest.getIdComplex() != null) {
-            building.setComplex(complexRepository.findById(buildingRequest.getIdComplex()).get());
+            building.get().setComplex(complexRepository.findById(buildingRequest.getIdComplex()).get());
         }
-        return ResponseEntity.status(HttpStatus.OK).body(responseHelper.response(HttpStatus.OK.value(),
-                "Building Updated Successfully", buildingRepository.save(building)));
+        return ResponseEntity.status(HttpStatus.OK).body(building.get());
     }
-
 
     public ResponseEntity<?> deleteOne(Long id) {
         if (buildingRepository.existsById(id) == false) {
             return ResponseEntity.status(HttpStatus.NOT_FOUND)
-                    .body(responseHelper.response(HttpStatus.NOT_FOUND.value(), "Error:Building Not Found", null));
+                    .body(new MessageResponse("Error:Building with id " + id + " not found"));
         }
         buildingRepository.deleteById(id);
-        return ResponseEntity.status(HttpStatus.OK).body(responseHelper.response(HttpStatus.OK.value(),
-                "Building Deleted Successfully", null));
+        return ResponseEntity.status(HttpStatus.OK)
+                .body(new MessageResponse("Success:Building with id " + id + " deleted"));
     }
 }

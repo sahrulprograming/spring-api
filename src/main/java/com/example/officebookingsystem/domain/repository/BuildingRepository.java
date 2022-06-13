@@ -12,5 +12,7 @@ public interface BuildingRepository extends JpaRepository<Building,Long> {
 
     boolean existsByName(String name);
 
+    List<Building> findByName(String name);
+
     List<Building> findAllByComplexId(Long complexId);
 }

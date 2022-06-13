@@ -25,13 +25,13 @@ public class Building {
     @JoinColumn(name = "complex_id")
     private Complex complex;
 
-    @NotBlank
+    @NotBlank(message = "Building name is required")
     private String name;
     
-    @NotBlank
+    @NotBlank(message = "Building address is required")
     private String address;
 
-    @NotBlank
+    @NotBlank(message = "Building description is required")
     private String description;
 
 }
