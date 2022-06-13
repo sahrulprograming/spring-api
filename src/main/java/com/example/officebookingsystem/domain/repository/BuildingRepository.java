@@ -21,8 +21,7 @@ public interface BuildingRepository extends JpaRepository<Building,Long> {
             value = "SELECT new com.example.officebookingsystem.domain.dto.response.UserResponseBuilding(b.id, b.name, s.name, b.address )"+
                     "FROM Building b "+
                     "INNER JOIN Complex c ON c.id=b.complex.id "+
-                    "INNER JOIN City s ON s.id=c.city.id"+
-                    "WHERE c.city.id=:id"
+                    "INNER JOIN City s ON s.id=c.city.id WHERE s.id =:id"
     )
     List<UserResponseBuilding> getAllBuildingsById(@Param("id") Long id);
 }
