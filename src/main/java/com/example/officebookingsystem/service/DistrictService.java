@@ -1,19 +1,16 @@
 package com.example.officebookingsystem.service;
 
-import com.example.officebookingsystem.domain.dto.response.DistrictResponse;
 import com.example.officebookingsystem.domain.entity.District;
 import com.example.officebookingsystem.domain.dto.request.DistrictCreateRequest;
-import com.example.officebookingsystem.domain.dto.response.DistrictCreateResponse;
+import com.example.officebookingsystem.domain.dto.response.DistrictResponse;
 import com.example.officebookingsystem.domain.dto.response.MessageResponse;
 import com.example.officebookingsystem.domain.entity.City;
-import com.example.officebookingsystem.domain.entity.District;
 import com.example.officebookingsystem.domain.repository.CityRepository;
 import com.example.officebookingsystem.domain.repository.DistrictRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
 
-import java.util.List;
 import java.util.Optional;
 
 
@@ -27,10 +24,10 @@ public class DistrictService {
 
     public ResponseEntity<?> createDistrict(DistrictCreateRequest districtCreateRequest){
         Optional<City> optionalCity = cityRepository.findById(districtCreateRequest.getCity_id());
-        DistrictCreateResponse districtCreateResponse = new DistrictCreateResponse();
-        districtCreateResponse.setName(districtCreateRequest.getName());
+        DistrictResponse districtResponse = new DistrictResponse();
+        districtResponse.setName(districtCreateRequest.getName());
         if (districtRepository.existsByName(districtCreateRequest.getName())){
-                String errorResponse = String.format("District with the name %s is already taken", districtCreateResponse.getName());
+                String errorResponse = String.format("District with the name %s is already taken", districtResponse.getName());
             return ResponseEntity.badRequest().body(new MessageResponse(errorResponse));
         }
         if (!optionalCity.isPresent()){

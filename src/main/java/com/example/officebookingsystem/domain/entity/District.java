@@ -17,9 +17,6 @@ import javax.persistence.*;
 )
 public class District {
     @Id
-<<<<<<< HEAD
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
-=======
     @SequenceGenerator(
             name = "district_sequence",
             sequenceName = "district_sequence",
@@ -29,7 +26,7 @@ public class District {
             strategy = GenerationType.SEQUENCE,
             generator = "district_sequence"
     )
->>>>>>> 3d11ab2fbbd9c757f0aa11ec800da6146a32a92d
+
     private Long id;
 
     @ManyToOne

@@ -7,9 +7,11 @@ import lombok.NoArgsConstructor;
 @Data
 @AllArgsConstructor
 @NoArgsConstructor
-public class DistrictCreateResponse {
+public class ComplexResponse {
     private Long id;
-    private String name;
-    private Long ciy_id;
+    private String complex_name;
+    private String address;
     private String city_name;
+    private String district_name;
+    private Long buildings;
 }
