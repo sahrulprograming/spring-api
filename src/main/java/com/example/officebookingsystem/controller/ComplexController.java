@@ -1,7 +1,6 @@
 package com.example.officebookingsystem.controller;
 import com.example.officebookingsystem.domain.dto.request.ComplexCreateRequest;
 import com.example.officebookingsystem.domain.dto.response.ComplexResponse;
-import com.example.officebookingsystem.domain.dto.response.ResponseData;
 import com.example.officebookingsystem.service.ComplexService;
 import io.swagger.annotations.ApiOperation;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -21,13 +20,13 @@ public class ComplexController {
     @PostMapping("/complex/create")
     @ApiOperation(value = "Create Complex", notes = "Endpoint for Creating Complex by City and District")
     @PreAuthorize("hasRole('ADMIN')")
-    public ResponseEntity<ResponseData<ComplexCreateRequest>> createComplex(@RequestBody ComplexCreateRequest complexCreateRequest){
+    public ResponseEntity<ComplexCreateRequest> createComplex(@RequestBody ComplexCreateRequest complexCreateRequest){
         return complexService.createComplex(complexCreateRequest);
     }
     @GetMapping("complex/findAll")
     @ApiOperation(value = "List Complex", notes = "Endpoint for Listng all Complex by City and District")
     @PreAuthorize("hasRole('ADMIN')")
-    public ResponseEntity<ResponseData<List<ComplexResponse>>> listComplex(){
+    public ResponseEntity<List<ComplexResponse>> listComplex(){
         return complexService.listComplex();
     }
 }

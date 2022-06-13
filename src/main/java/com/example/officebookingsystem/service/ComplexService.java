@@ -1,11 +1,9 @@
 package com.example.officebookingsystem.service;
 import com.example.officebookingsystem.domain.dto.request.ComplexCreateRequest;
 import com.example.officebookingsystem.domain.dto.response.ComplexResponse;
-import com.example.officebookingsystem.domain.dto.response.ResponseData;
 import com.example.officebookingsystem.domain.entity.City;
 import com.example.officebookingsystem.domain.entity.Complex;
 import com.example.officebookingsystem.domain.entity.District;
-import com.example.officebookingsystem.domain.helpers.ResponseHelper;
 import com.example.officebookingsystem.domain.repository.CityRepository;
 import com.example.officebookingsystem.domain.repository.ComplexRepository;
 import com.example.officebookingsystem.domain.repository.DistrictRepository;
@@ -29,16 +27,14 @@ public class ComplexService {
     @Autowired
     private DistrictRepository districtRepository;
 
-    @Autowired
-    private ResponseHelper responseHelper;
 
-    public ResponseEntity<ResponseData<ComplexCreateRequest>> createComplex(ComplexCreateRequest complexCreateRequest){
+    public ResponseEntity<ComplexCreateRequest> createComplex(ComplexCreateRequest complexCreateRequest){
         Optional<City> optionalCity = cityRepository.findById(complexCreateRequest.getCity_id());
         Optional<District> optionalDistrict = districtRepository.findById(complexCreateRequest.getDistrict_id());
 
         if(complexRepository.existsByComplexName(complexCreateRequest.getComplex_name())){
-            String errorResponse = String.format("Complex with the name %s is already taken", complexCreateRequest.getComplex_name());
-            return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(responseHelper.response(HttpStatus.BAD_REQUEST.value(),errorResponse,null));
+            // String errorResponse = String.format("Complex with the name %s is already taken", complexCreateRequest.getComplex_name());
+            return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(null);
         }
 
         Complex complex = new Complex();
@@ -47,11 +43,11 @@ public class ComplexService {
         complex.setCity(optionalCity.get());
         complex.setDistrict(optionalDistrict.get());
         complexRepository.save(complex);
-        return ResponseEntity.status(HttpStatus.CREATED).body(responseHelper.response(HttpStatus.CREATED.value(), "Complex created successfully", complexCreateRequest));
+        return ResponseEntity.status(HttpStatus.CREATED).body(complexCreateRequest);
     }
 
-    public ResponseEntity<ResponseData<List<ComplexResponse>>> listComplex(){
-        return ResponseEntity.status(HttpStatus.OK).body(responseHelper.response(HttpStatus.OK.value(), "Success", complexRepository.getAllComplex()));
+    public ResponseEntity<List<ComplexResponse>> listComplex(){
+        return ResponseEntity.status(HttpStatus.OK).body(complexRepository.getAllComplex());
     }
 
 }
