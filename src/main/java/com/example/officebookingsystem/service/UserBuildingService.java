@@ -1,5 +1,4 @@
 package com.example.officebookingsystem.service;
-
 import com.example.officebookingsystem.domain.dto.response.ResponseData;
 import com.example.officebookingsystem.domain.dto.response.UserResponseBuilding;
 import com.example.officebookingsystem.domain.entity.City;
@@ -31,4 +30,5 @@ public class UserBuildingService {
 
         return ResponseEntity.status(HttpStatus.OK).body(buildingRepository.getAllBuildingsById((id)));
     }
+
 }
