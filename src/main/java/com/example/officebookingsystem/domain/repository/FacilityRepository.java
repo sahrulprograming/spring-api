@@ -1,9 +1,10 @@
 package com.example.officebookingsystem.domain.repository;
 
+import com.example.officebookingsystem.domain.entity.Facility;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.stereotype.Repository;
 
 @Repository
-public interface NearByFacilityRepository extends JpaRepository<NearByFacilityRepository, Long> {
+public interface FacilityRepository extends JpaRepository<Facility, Long> {
 
 }

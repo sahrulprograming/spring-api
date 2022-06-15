@@ -12,7 +12,7 @@ import javax.validation.constraints.NotBlank;
 @AllArgsConstructor
 @NoArgsConstructor
 @Table(name = "facilities")
-public class NearByFacility {
+public class Facility {
     @Id
     @SequenceGenerator(name = "facility_sequence", sequenceName = "facility_sequence", allocationSize = 1)
     @GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "facility_sequence")

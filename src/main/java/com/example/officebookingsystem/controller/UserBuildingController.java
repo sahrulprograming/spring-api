@@ -20,8 +20,10 @@ public class UserBuildingController {
     @GetMapping("/list/{id}")
     @ApiOperation(value = "List Building", notes = "Endpoint for Listing all Building by City Id")
     @PreAuthorize("hasRole('USER') or hasRole('ADMIN')")
-    public ResponseEntity<ResponseData<List<UserResponseBuilding>>> listBuilding(@PathVariable("id") Long id){
+    public ResponseEntity<List<UserResponseBuilding>> listBuilding(@PathVariable("id") Long id){
         return userBuildingService.getAllBuildingsById(id);
     }
+
+
 
 }
