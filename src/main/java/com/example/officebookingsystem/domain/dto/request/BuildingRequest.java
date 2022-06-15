@@ -4,8 +4,8 @@ import lombok.Data;
 
 @Data
 public class BuildingRequest {
-    private Long complex_id;
-    private String building_name;
+    private String name;
     private String address;
+    private Long idComplex;
     private String description;
 }
