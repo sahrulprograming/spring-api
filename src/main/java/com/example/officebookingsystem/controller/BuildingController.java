@@ -4,6 +4,8 @@ import java.util.List;
 
 import javax.validation.Valid;
 
+import com.example.officebookingsystem.domain.dto.request.FacilityCreateRequest;
+import com.example.officebookingsystem.service.FacilityService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.access.prepost.PreAuthorize;
@@ -30,6 +32,9 @@ import io.swagger.annotations.ApiOperation;
 public class BuildingController {
     @Autowired
     private BuildingService buildingService;
+
+    @Autowired
+    private FacilityService facilityService;
 
     // Create buildings
     @ApiOperation(value = "Create Building", notes = "Endpoint for admin creating building")
@@ -78,6 +83,13 @@ public class BuildingController {
     @PreAuthorize("hasRole('ADMIN')")
     public ResponseEntity<?> deleteBuilding(@PathVariable("id") Long id) {
         return buildingService.deleteOne(id);
+    }
+
+    @PostMapping("admin/building/facility/create")
+    @ApiOperation(value = "Add Nearby Facility", notes = "Endpoint for Adding Nearby facility by The Building")
+    @PreAuthorize("hasRole('ADMIN')")
+    public ResponseEntity<FacilityCreateRequest> addFacility(@Valid@RequestBody FacilityCreateRequest facilityCreateRequest){
+        return facilityService.addFacility(facilityCreateRequest);
     }
 
 }
