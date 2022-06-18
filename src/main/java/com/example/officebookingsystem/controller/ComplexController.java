@@ -1,13 +1,16 @@
 package com.example.officebookingsystem.controller;
 import com.example.officebookingsystem.domain.dto.request.ComplexCreateRequest;
 import com.example.officebookingsystem.domain.dto.response.ComplexResponse;
+import com.example.officebookingsystem.domain.entity.Complex;
 import com.example.officebookingsystem.service.ComplexService;
 import io.swagger.annotations.ApiOperation;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.access.method.P;
 import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.*;
 
+import javax.validation.Valid;
 import java.util.List;
 
 @RestController
@@ -28,5 +31,19 @@ public class ComplexController {
     @PreAuthorize("hasRole('ADMIN')")
     public ResponseEntity<List<ComplexResponse>> listComplex(){
         return complexService.listComplex();
+    }
+
+    @DeleteMapping("complex/delete/{id}")
+    @ApiOperation(value = "Delete Complex", notes = "Endpoint for delete complex by id")
+    @PreAuthorize("hasRole('ADMIN')")
+    public ResponseEntity<?> deleteComplex(@PathVariable("id") Long id){
+        return complexService.deleteById(id);
+    }
+
+    @PutMapping("complex/update/{id}")
+    @ApiOperation(value = "Update Complex ", notes = "Endpoint for update complex by id ")
+    @PreAuthorize("hasRole('ADMIN')")
+    public ResponseEntity<Complex> updateComplex(@PathVariable("id") Long id, @Valid @RequestBody ComplexCreateRequest complexCreateRequest){
+        return complexService.update(id,complexCreateRequest);
     }
 }

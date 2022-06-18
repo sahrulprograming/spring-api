@@ -1,6 +1,9 @@
 package com.example.officebookingsystem.service;
+import com.example.officebookingsystem.domain.dto.request.BuildingRequest;
 import com.example.officebookingsystem.domain.dto.request.ComplexCreateRequest;
 import com.example.officebookingsystem.domain.dto.response.ComplexResponse;
+import com.example.officebookingsystem.domain.dto.response.MessageResponse;
+import com.example.officebookingsystem.domain.entity.Building;
 import com.example.officebookingsystem.domain.entity.City;
 import com.example.officebookingsystem.domain.entity.Complex;
 import com.example.officebookingsystem.domain.entity.District;
@@ -50,4 +53,25 @@ public class ComplexService {
         return ResponseEntity.status(HttpStatus.OK).body(complexRepository.getAllComplex());
     }
 
+    public ResponseEntity<?> deleteById(Long id){
+        if(complexRepository.existsById(id)== false){
+            return ResponseEntity.status(HttpStatus.NOT_FOUND).body(new MessageResponse("ERROR : building with " + id + "doesn't exists"));
+        }
+        complexRepository.deleteById(id);
+        return ResponseEntity.status(HttpStatus.OK).body(new MessageResponse("Complex successfully created"));
+    }
+
+    public ResponseEntity<Complex> update(Long id, ComplexCreateRequest complexCreateRequest) {
+        Optional<Complex> complex = complexRepository.findById(id);
+        if (complex == null) {
+            return ResponseEntity.status(HttpStatus.NOT_FOUND).body(null);
+        }
+        complex.get().setComplexName(complexCreateRequest.getComplex_name());
+        complex.get().setAddress(complexCreateRequest.getStreet());
+
+        if (districtRepository.getById(id) != null) {
+            complex.get().setDistrict(districtRepository.findById(complexCreateRequest.getDistrict_id()).get());
+        }
+        return ResponseEntity.status(HttpStatus.OK).body(complex.get());
+    }
 }
