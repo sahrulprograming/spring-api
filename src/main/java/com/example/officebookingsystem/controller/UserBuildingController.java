@@ -3,6 +3,7 @@ package com.example.officebookingsystem.controller;
 import com.example.officebookingsystem.domain.dto.response.ResponseData;
 import com.example.officebookingsystem.domain.dto.response.UserResponseBuilding;
 import com.example.officebookingsystem.service.UserBuildingService;
+import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
@@ -13,6 +14,7 @@ import java.util.List;
 
 @RestController
 @RequestMapping("/api/page/user/building")
+@Api(tags = "User View Building API", description = "Buildings")
 public class UserBuildingController {
     @Autowired
     private UserBuildingService userBuildingService;

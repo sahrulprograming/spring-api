@@ -1,6 +1,7 @@
 package com.example.officebookingsystem.controller;
 import com.example.officebookingsystem.domain.dto.request.DistrictCreateRequest;
 import com.example.officebookingsystem.service.DistrictService;
+import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
@@ -9,6 +10,7 @@ import org.springframework.web.bind.annotation.*;
 
 @RestController
 @RequestMapping("api/page/admin")
+@Api(tags = "Admin Managing Districts API", description = "Districts")
 public class DistrictController {
 
     @Autowired

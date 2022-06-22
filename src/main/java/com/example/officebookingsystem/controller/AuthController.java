@@ -26,7 +26,7 @@ import io.swagger.annotations.ApiOperation;
 @RestController
 @RequestMapping("/api/auth")
 // Custom Penamaan Controller Pada Doc Swagger
-@Api(tags = "Auth Controller", description = "Authentication")
+@Api(tags = "Authentication API ", description = "Authentication")
 public class AuthController {
     @Autowired
     AuthService authService;

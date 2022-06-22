@@ -28,7 +28,7 @@ import io.swagger.annotations.ApiOperation;
 
 @RestController
 @RequestMapping("/api/page")
-@Api(tags = "Buildings Controller", description = "Buildings")
+@Api(tags = "Admin Managing Building API", description = "Buildings")
 public class BuildingController {
     @Autowired
     private BuildingService buildingService;
