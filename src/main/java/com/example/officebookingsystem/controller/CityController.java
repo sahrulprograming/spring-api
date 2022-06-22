@@ -11,7 +11,7 @@ import org.springframework.web.bind.annotation.*;
 
 @RestController
 @RequestMapping("api/page/admin")
-@Api(tags = "Admin Managing Building City API", description = "Cities")
+@Api(tags = "Admin Managing City API", description = "Cities")
 public class CityController {
 
     @Autowired
