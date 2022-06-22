@@ -69,7 +69,7 @@ jobs:
           port: 22
           script: |
             docker stop office-booking-system
-            docker rmi michaelmgp/office-booking-system-development:latest
-            docker pull michaelmgp/office-booking-system-development:latest
+            docker rmi michaelmgp/office-booking-system-development
+            docker pull michaelmgp/office-booking-system-development
             docker start postgresql
-            docker run -d --rm --name office-booking-system -p 80:8080 --env-file dev.env --network office_network office-booking-system-development:latest
+            docker run -d --rm --name office-booking-system -p 80:8080 --env-file dev.env --network office_network office-booking-system-development
