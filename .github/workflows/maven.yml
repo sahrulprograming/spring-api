@@ -72,4 +72,4 @@ jobs:
             docker rmi michaelmgp/office-booking-system-development:latest
             docker pull michaelmgp/office-booking-system-development:latest
             docker start postgresql
-            docker run -d --rm --name office-booking-system -p 80:8080 --env-file dev.env --network office_network office-booking-system-development:latest
+            docker run -d --rm --name office-booking-system -p 80:8080 --env-file dev.env --network office_network office-booking-system-development:la
