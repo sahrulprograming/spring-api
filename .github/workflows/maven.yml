@@ -68,7 +68,6 @@ jobs:
           key: ${{ secrets.SSH_PRIVATE_KEY }}
           port: 22
           script: |
-#            docker stop office-booking-system
             docker rmi michaelmgp/office-booking-system-development
             docker pull michaelmgp/office-booking-system-development
             docker start postgresql
