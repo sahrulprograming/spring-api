@@ -3,7 +3,7 @@ package com.example.officebookingsystem.service;
 import com.example.officebookingsystem.domain.dto.request.FacilityCreateRequest;
 
 import com.example.officebookingsystem.domain.entity.Building;
-import com.example.officebookingsystem.domain.entity.Facility;
+import com.example.officebookingsystem.domain.entity.Facility_Category;
 import com.example.officebookingsystem.domain.repository.BuildingRepository;
 import com.example.officebookingsystem.domain.repository.FacilityRepository;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -29,7 +29,7 @@ public class FacilityService {
             return ResponseEntity.status(HttpStatus.NOT_FOUND).body(null);
         }
 
-        Facility nearByFacility = new Facility();
+        Facility_Category nearByFacility = new Facility_Category();
         nearByFacility.setName(facilityCreateRequest.getName());
         nearByFacility.setDescription(facilityCreateRequest.getDescription());
         nearByFacility.setBuilding(building.get());
