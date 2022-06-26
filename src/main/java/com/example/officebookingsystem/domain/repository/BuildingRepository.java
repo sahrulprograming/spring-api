@@ -17,6 +17,7 @@ public interface BuildingRepository extends JpaRepository<Building,Long> {
 
     List<Building> findByName(String name);
 
+
     // Find building by complex id
     @Query("SELECT building FROM Building building WHERE building.complex.id = :id")
     List<Building> findByComplexId(Long id);

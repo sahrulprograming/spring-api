@@ -4,7 +4,10 @@ import java.util.List;
 
 import javax.validation.Valid;
 
+import com.example.officebookingsystem.domain.dto.request.FacilityCategoryCreateRequest;
 import com.example.officebookingsystem.domain.dto.request.FacilityCreateRequest;
+import com.example.officebookingsystem.domain.dto.response.FacilityCategoryResponse;
+import com.example.officebookingsystem.domain.dto.response.FacilityResponse;
 import com.example.officebookingsystem.service.FacilityService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
@@ -85,11 +88,17 @@ public class BuildingController {
         return buildingService.deleteOne(id);
     }
 
-    @PostMapping("admin/building/facility/create")
-    @ApiOperation(value = "Add Nearby Facility", notes = "Endpoint for Adding Nearby facility by The Building")
+    @PostMapping("admin/building/facility/category")
+    @ApiOperation(value = "Add Nearby Facility Category", notes = "Endpoint for Adding Facility Category for The Building")
     @PreAuthorize("hasRole('ADMIN')")
-    public ResponseEntity<FacilityCreateRequest> addFacility(@Valid@RequestBody FacilityCreateRequest facilityCreateRequest){
-        return facilityService.addFacility(facilityCreateRequest);
+    public ResponseEntity<FacilityCategoryResponse> addFacilityCategory(@Valid@RequestBody FacilityCategoryCreateRequest facilityCategoryCreateRequest){
+        return facilityService.addCategory(facilityCategoryCreateRequest);
     }
 
+    @PostMapping("admin/building/facility/create")
+    @ApiOperation(value = "Add Nearby Facility by Category", notes = "Endpoint for Adding Faciity for The Building")
+    @PreAuthorize("hasRole('ADMIN')")
+    public ResponseEntity<FacilityResponse> addFacility(@Valid@RequestBody FacilityCreateRequest facilityCreateRequest){
+        return facilityService.addFacility(facilityCreateRequest);
+    }
 }

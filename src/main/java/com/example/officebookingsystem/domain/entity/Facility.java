@@ -21,6 +21,10 @@ public class Facility {
     @JoinColumn(name = "facility_category_id")
     private Facility_Category facility_category;
 
+    @ManyToOne
+    @JoinColumn(name = "building_id")
+    private Building building;
+
     private String name;
 
     private Float distance;
