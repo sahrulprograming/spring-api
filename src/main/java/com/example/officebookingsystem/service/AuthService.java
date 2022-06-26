@@ -1,5 +1,4 @@
 package com.example.officebookingsystem.service;
-
 import com.example.officebookingsystem.domain.dto.request.LoginRequest;
 import com.example.officebookingsystem.domain.dto.request.SignupRequest;
 import com.example.officebookingsystem.domain.dto.response.MessageResponse;
@@ -44,7 +43,7 @@ public class AuthService {
 
     public ResponseEntity<?> signIn (LoginRequest loginRequest){
         Authentication authentication = authenticationManager
-                .authenticate(new UsernamePasswordAuthenticationToken(loginRequest.getUsername(), loginRequest.getPassword()));
+                .authenticate(new UsernamePasswordAuthenticationToken(loginRequest.getEmail(), loginRequest.getPassword()));
         SecurityContextHolder.getContext().setAuthentication(authentication);
         UserDetailImpl userDetail = (UserDetailImpl) authentication.getPrincipal();
         ResponseCookie jwtCookie = jwtUtils.generateJwtCookie(userDetail);
