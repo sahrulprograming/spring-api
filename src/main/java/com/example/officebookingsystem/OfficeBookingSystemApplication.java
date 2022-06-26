@@ -14,16 +14,16 @@ public class OfficeBookingSystemApplication {
         SpringApplication.run(OfficeBookingSystemApplication.class, args);
     }
 
-    @Bean
-    public WebMvcConfigurer corsConfigurer(){
-        return new WebMvcConfigurer() {
-            @Override
-            public void addCorsMappings(CorsRegistry registry) {
-                registry.addMapping("api/**").allowedOrigins("http://localhost:3000");
-                registry.addMapping("api/**").allowedOrigins("https://3.88.14.239:80");
-            }
-        };
-    }
+//    @Bean
+//    public WebMvcConfigurer corsConfigurer(){
+//        return new WebMvcConfigurer() {
+//            @Override
+//            public void addCorsMappings(CorsRegistry registry) {
+//                registry.addMapping("api/**").allowedOrigins("http://localhost:3000");
+//                registry.addMapping("api/**").allowedOrigins("https://3.88.14.239:80");
+//            }
+//        };
+//    }
 
     }
 
