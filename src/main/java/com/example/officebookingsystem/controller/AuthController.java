@@ -49,11 +49,5 @@ public class AuthController {
         return authService.signUp(signupRequest);
     }
 
-    @ApiOperation(value = "Signout", notes = "Endpoint untuk logout ")
-    @PostMapping("/signout")
-    public ResponseEntity<?> logoutUser() {
-        ResponseCookie cookie = jwtUtils.getCleanJwtCookie();
-        return ResponseEntity.ok().header(HttpHeaders.SET_COOKIE, cookie.toString())
-                .body(new MessageResponse("You've been signed out!"));
-    }
+
 }

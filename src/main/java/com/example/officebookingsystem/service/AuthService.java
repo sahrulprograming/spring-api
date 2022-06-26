@@ -1,9 +1,8 @@
 package com.example.officebookingsystem.service;
-
 import com.example.officebookingsystem.domain.dto.request.LoginRequest;
 import com.example.officebookingsystem.domain.dto.request.SignupRequest;
 import com.example.officebookingsystem.domain.dto.response.MessageResponse;
-import com.example.officebookingsystem.domain.dto.response.UserInfoResponse;
+import com.example.officebookingsystem.domain.dto.response.JwtResponse;
 import com.example.officebookingsystem.domain.entity.Role;
 import com.example.officebookingsystem.domain.entity.User;
 import com.example.officebookingsystem.domain.implementation.UserDetailImpl;
@@ -13,8 +12,6 @@ import com.example.officebookingsystem.domain.repository.UserRepository;
 import com.example.officebookingsystem.security.jwt.JwtUtils;
 import lombok.AllArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.http.HttpHeaders;
-import org.springframework.http.ResponseCookie;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
@@ -44,15 +41,15 @@ public class AuthService {
 
     public ResponseEntity<?> signIn (LoginRequest loginRequest){
         Authentication authentication = authenticationManager
-                .authenticate(new UsernamePasswordAuthenticationToken(loginRequest.getUsername(), loginRequest.getPassword()));
+                .authenticate(new UsernamePasswordAuthenticationToken(loginRequest.getEmail(), loginRequest.getPassword()));
         SecurityContextHolder.getContext().setAuthentication(authentication);
+        String jwt = jwtUtils.generateJwtToken(authentication);
         UserDetailImpl userDetail = (UserDetailImpl) authentication.getPrincipal();
-        ResponseCookie jwtCookie = jwtUtils.generateJwtCookie(userDetail);
         List<String> roles = userDetail.getAuthorities().stream()
                 .map(item -> item.getAuthority())
                 .collect(Collectors.toList());
-        return ResponseEntity.ok().header(HttpHeaders.SET_COOKIE, jwtCookie.toString())
-                .body(new UserInfoResponse(
+
+        return ResponseEntity.ok(new JwtResponse(jwt,
                         userDetail.getId(),
                         userDetail.getName(),
                         userDetail.getEmail(),

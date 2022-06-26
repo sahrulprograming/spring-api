@@ -30,6 +30,4 @@ public class CityController {
     public ResponseEntity<?> listCity(){
         return cityService.listCity();
     }
-
-
 }
