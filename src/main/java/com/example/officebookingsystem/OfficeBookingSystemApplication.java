@@ -19,8 +19,7 @@ public class OfficeBookingSystemApplication {
         return new WebMvcConfigurer() {
             @Override
             public void addCorsMappings(CorsRegistry registry) {
-                registry.addMapping("api/").allowedOrigins("http://localhost:3000");
-                registry.addMapping("api/").allowedOrigins("https://3.88.14.239:80");
+                registry.addMapping("/**").allowedOrigins("http://localhost:3000");
             }
         };
     }
