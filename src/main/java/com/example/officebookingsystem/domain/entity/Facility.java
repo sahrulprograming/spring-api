@@ -1,14 +1,13 @@
-package com.example.officebookingsystem.domain.entity;
+package com.example.officebookingsystem. domain.entity;
 
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
 import javax.persistence.*;
-import javax.validation.constraints.NotBlank;
 
-@Data
 @Entity
+@Data
 @AllArgsConstructor
 @NoArgsConstructor
 @Table(name = "facilities")
@@ -19,11 +18,18 @@ public class Facility {
     private Long id;
 
     @ManyToOne
+    @JoinColumn(name = "facility_category_id")
+    private Facility_Category facility_category;
+
+    @ManyToOne
     @JoinColumn(name = "building_id")
     private Building building;
 
-    @NotBlank
     private String name;
 
-    private String description;
+    private Float distance;
+
+    private Integer duration;
+
+
 }

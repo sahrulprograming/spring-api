@@ -33,4 +33,10 @@ public class Building {
         @NotBlank(message = "Building description is required")
         private String description;
 
+        @Lob
+        private String building_image;
+
+        private String image_type;
+
+
 }
