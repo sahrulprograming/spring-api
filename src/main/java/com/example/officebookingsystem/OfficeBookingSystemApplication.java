@@ -20,11 +20,15 @@ public class OfficeBookingSystemApplication {
             @Override
             public void addCorsMappings(CorsRegistry registry) {
 <<<<<<< HEAD
+<<<<<<< HEAD
                 registry.addMapping("/api/page/**").allowedOrigins("http://localhost:3000");
 =======
                 registry.addMapping("api/").allowedOrigins("http://localhost:3000");
                 registry.addMapping("api/").allowedOrigins("https://3.88.14.239:80");
 >>>>>>> e1331f5aeb34709da33340261cc220c4b03fe7ef
+=======
+                registry.addMapping("/**").allowedOrigins("http://localhost:3000");
+>>>>>>> 7e2f179b5171d65ef8001b40f538b06bae067343
             }
         };
     }

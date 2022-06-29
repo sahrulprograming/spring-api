@@ -43,7 +43,7 @@ public class AuthController {
         return authService.signIn(loginRequest);
     }
 
-    @ApiOperation(value = "Signup", notes = "Endpoint untuk mendaftar ")
+    @ApiOperation(value = "Signup", notes = "Endpoint for Register ")
     @PostMapping("/signup")
     public ResponseEntity<?> registerUser(@Valid @RequestBody SignupRequest signupRequest) {
         return authService.signUp(signupRequest);
