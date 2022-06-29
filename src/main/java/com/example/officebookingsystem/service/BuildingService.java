@@ -45,7 +45,6 @@ public class BuildingService {
         }
         return ResponseEntity.ok().body(buildingRepository.save(building));
     }
-
     // Service Find All Buildings
     public ResponseEntity<List<BuildingResponse>> adminFindAll() {
         List<Building> building = buildingRepository.findAll();
@@ -58,6 +57,8 @@ public class BuildingService {
                 br.setComplexName(b.getComplex().getComplexName());
                 // mengambil alamat pada complex berdasarkan index building
                 br.setComplexAdress(b.getComplex().getAddress());
+
+                br.setId(b.getId());
             }
             // mengambil jumlah room pada building
             Integer numOfRooms = roomRepository.countByBuilding(b);

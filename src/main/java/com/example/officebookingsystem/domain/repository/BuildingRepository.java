@@ -5,6 +5,7 @@ import com.example.officebookingsystem.domain.entity.Building;
 
 import java.util.List;
 
+import com.example.officebookingsystem.domain.entity.Complex;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.repository.query.Param;
@@ -28,4 +29,6 @@ public interface BuildingRepository extends JpaRepository<Building,Long> {
                     "INNER JOIN City s ON s.id=c.city.id WHERE s.id =:id"
     )
     List<UserResponseBuilding> getAllBuildingsById(@Param("id") Long id);
+
+    Integer countByComplex(Complex complex);
 }

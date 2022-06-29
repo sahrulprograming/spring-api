@@ -13,5 +13,5 @@ public class ComplexResponse {
     private String address;
     private String city_name;
     private String district_name;
-    private Long buildings;
+    private Integer numOfBuilding;
 }

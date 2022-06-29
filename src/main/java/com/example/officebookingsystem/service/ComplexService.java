@@ -7,6 +7,7 @@ import com.example.officebookingsystem.domain.entity.Building;
 import com.example.officebookingsystem.domain.entity.City;
 import com.example.officebookingsystem.domain.entity.Complex;
 import com.example.officebookingsystem.domain.entity.District;
+import com.example.officebookingsystem.domain.repository.BuildingRepository;
 import com.example.officebookingsystem.domain.repository.CityRepository;
 import com.example.officebookingsystem.domain.repository.ComplexRepository;
 import com.example.officebookingsystem.domain.repository.DistrictRepository;
@@ -15,6 +16,7 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
 
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
 
@@ -29,6 +31,9 @@ public class ComplexService {
 
     @Autowired
     private DistrictRepository districtRepository;
+
+    @Autowired
+    private BuildingRepository buildingRepository;
 
 
     public ResponseEntity<ComplexCreateRequest> createComplex(ComplexCreateRequest complexCreateRequest){
@@ -50,7 +55,28 @@ public class ComplexService {
     }
 
     public ResponseEntity<List<ComplexResponse>> listComplex(){
-        return ResponseEntity.status(HttpStatus.OK).body(complexRepository.getAllComplex());
+        List<Complex> complexList = complexRepository.findAll();
+        List<ComplexResponse> complexResponseList = new ArrayList<>();
+        for(Complex c : complexList ){
+            ComplexResponse complexResponse = new ComplexResponse();
+            complexResponse.setComplex_name(c.getComplexName());
+            complexResponse.setAddress(c.getAddress());
+            complexResponse.setCity_name(c.getCity().getName());
+            complexResponse.setDistrict_name(c.getDistrict().getName());
+            complexResponse.setId(c.getId());
+            Integer numOfBuildings = buildingRepository.countByComplex(c);
+            if(numOfBuildings!= null){
+                complexResponse.setNumOfBuilding(numOfBuildings);
+            }
+
+            complexResponseList.add(complexResponse);
+        }
+
+        if(complexList.isEmpty()){
+            return ResponseEntity.status(HttpStatus.NOT_FOUND).body(null);
+        }
+
+        return ResponseEntity.status(HttpStatus.OK).body(complexResponseList);
     }
 
     public ResponseEntity<?> deleteById(Long id){
