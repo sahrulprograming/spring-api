@@ -42,7 +42,7 @@ public class BuildingController {
     // Create buildings
     @ApiOperation(value = "Create Building", notes = "Endpoint for admin creating building")
     @PostMapping("/admin/building/create")
-    // @PreAuthorize("hasRole('ADMIN')")
+    @PreAuthorize("hasRole('ADMIN')")
     public ResponseEntity<?> createBuilding(@Valid @RequestBody BuildingRequest buildingRequest) {
         return buildingService.create(buildingRequest);
     }
