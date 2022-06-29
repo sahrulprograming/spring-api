@@ -96,7 +96,7 @@ public class BuildingController {
     }
 
     @PostMapping("admin/building/facility/create")
-    @ApiOperation(value = "Add Nearby Facility by Category", notes = "Endpoint for Adding Faciity for The Building")
+    @ApiOperation(value = "Add Nearby Facility by Category", notes = "Endpoint for Adding Facility for The Building")
     @PreAuthorize("hasRole('ADMIN')")
     public ResponseEntity<FacilityResponse> addFacility(@Valid@RequestBody FacilityCreateRequest facilityCreateRequest){
         return facilityService.addFacility(facilityCreateRequest);

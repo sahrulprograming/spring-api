@@ -40,4 +40,9 @@ public class Room {
     private String description;
 
     private EStatus status;
+
+    @Lob
+    private String room_image;
+
+    private String image_type;
 }

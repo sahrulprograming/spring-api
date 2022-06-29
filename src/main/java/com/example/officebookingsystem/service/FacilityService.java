@@ -88,7 +88,9 @@ public class FacilityService {
             facilityCategory.setName(facility_category.getName());
             facilityCategory.setId(facility_category.getId());
         }
-
+        if(facilityCategories.isEmpty()){
+            return ResponseEntity.status(HttpStatus.NOT_FOUND).body(null);
+        }
         return ResponseEntity.status(HttpStatus.FOUND).body(facilityCategoryResponse);
     }
 }

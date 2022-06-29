@@ -18,10 +18,6 @@ public class Facility_Category {
     @GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "category_sequence")
     private Long id;
 
-    @ManyToOne
-    @JoinColumn(name = "building_id")
-    private Building building;
-
     @NotBlank
     private String name;
 

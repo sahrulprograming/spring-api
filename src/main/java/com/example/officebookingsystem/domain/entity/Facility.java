@@ -14,7 +14,7 @@ import javax.persistence.*;
 public class Facility {
     @Id
     @SequenceGenerator(name = "facility_sequence", sequenceName = "facility_sequence", allocationSize = 1)
-    @GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "category_sequence")
+    @GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "facility_sequence")
     private Long id;
 
     @ManyToOne
