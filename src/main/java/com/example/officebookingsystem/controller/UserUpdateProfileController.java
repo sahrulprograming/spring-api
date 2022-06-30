@@ -56,14 +56,14 @@ public class UserUpdateProfileController {
     }
 
     @PutMapping("/profile/update/{id}")
-    @ApiOperation(value = "Update Email ", notes = "Endpoint for update profile by User id ")
+    @ApiOperation(value = "Update Profile ", notes = "Endpoint for update profile by User id ")
     @PreAuthorize("hasRole('USER')")
     public ResponseEntity<?> editProfile(@PathVariable("id") Long id, @Valid @RequestBody UserUpdateProfileRequest userUpdateProfileRequest){
         return userProfileService.editUserProfile(id, userUpdateProfileRequest);
     }
 
     @PostMapping("/profile/image/{id}")
-    @ApiOperation(value = "Update Email ", notes = "Endpoint for update profile by id ")
+    @ApiOperation(value = "Upload Image ", notes = "Endpoint for update profile by id ")
     @PreAuthorize("hasRole('USER')")
     public ResponseEntity<?> uploadImage(@PathVariable("id") Long id, @Valid @RequestBody UploadProfileImageRequest uploadProfileImageRequest){
         return userProfileService.uploadImage(id, uploadProfileImageRequest);
