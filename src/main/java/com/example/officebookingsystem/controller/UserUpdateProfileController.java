@@ -56,7 +56,7 @@ public class UserUpdateProfileController {
     }
 
     @PutMapping("/profile/update/{id}")
-    @ApiOperation(value = "Update Email ", notes = "Endpoint for update profile by id ")
+    @ApiOperation(value = "Update Email ", notes = "Endpoint for update profile by User id ")
     @PreAuthorize("hasRole('USER')")
     public ResponseEntity<?> editProfile(@PathVariable("id") Long id, @Valid @RequestBody UserUpdateProfileRequest userUpdateProfileRequest){
         return userProfileService.editUserProfile(id, userUpdateProfileRequest);
