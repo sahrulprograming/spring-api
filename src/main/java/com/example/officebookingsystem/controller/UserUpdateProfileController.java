@@ -63,7 +63,7 @@ public class UserUpdateProfileController {
     }
 
     @PostMapping("/profile/image/{id}")
-    @ApiOperation(value = "Upload Image ", notes = "Endpoint for update profile by id ")
+    @ApiOperation(value = "Upload Image ", notes = "Endpoint for update profile by UserProfile id ")
     @PreAuthorize("hasRole('USER')")
     public ResponseEntity<?> uploadImage(@PathVariable("id") Long id, @Valid @RequestBody UploadProfileImageRequest uploadProfileImageRequest){
         return userProfileService.uploadImage(id, uploadProfileImageRequest);
