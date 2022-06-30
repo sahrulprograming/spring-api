@@ -88,11 +88,18 @@ public class BuildingController {
         return buildingService.deleteOne(id);
     }
 
-    @PostMapping("admin/building/facility/category")
+    @PostMapping("/admin/building/facility/category")
     @ApiOperation(value = "Add Nearby Facility Category", notes = "Endpoint for Adding Facility Category for The Building")
     @PreAuthorize("hasRole('ADMIN')")
     public ResponseEntity<FacilityCategoryResponse> addFacilityCategory(@Valid@RequestBody FacilityCategoryCreateRequest facilityCategoryCreateRequest){
         return facilityService.addCategory(facilityCategoryCreateRequest);
+    }
+
+    @GetMapping("/admin/building/facility/category/findAll")
+    @ApiOperation(value = "List all Facility Category", notes = "Endpoint for Listing All Facility Category")
+    @PreAuthorize("hasRole('ADMIN')")
+    public ResponseEntity<List<FacilityCategoryResponse>> findAllCategory(){
+        return facilityService.listFacilityCategories();
     }
 
     @PostMapping("admin/building/facility/create")
