@@ -17,17 +17,18 @@ public class CityController {
     @Autowired
     private CityService cityService;
 
-    @PostMapping("/city/create")
-    @ApiOperation(value = "Create City", notes = "Endpoint for adding City to the database")
+    @PostMapping("/city/create/{id}")
+    @ApiOperation(value = "Create City by Province", notes = "Endpoint for adding City to the database by Province Id")
     @PreAuthorize("hasRole('ADMIN')")
-    public ResponseEntity<?> createCity(@RequestBody CityRequest cityRequest){
-        return cityService.createCity(cityRequest);
+    public ResponseEntity<?> createCityByProvince(@RequestBody CityRequest cityRequest) {
+        return cityService.createCityByProvinceId(cityRequest);
     }
 
-    @GetMapping("/city/findAll")
-    @ApiOperation(value = "List Cities", notes = "Endpoint for listing all cities")
+    @GetMapping("/city/list/{id}")
+    @ApiOperation(value = "List Cities by Province", notes = "Endpoint for listing all cities by province")
     @PreAuthorize("hasRole('ADMIN')")
-    public ResponseEntity<?> listCity(){
-        return cityService.listCity();
+    public ResponseEntity<?> listCityByProvinceId(@PathVariable("id") Long id) {
+        return cityService.listCityByProvinceId(id);
     }
+
 }

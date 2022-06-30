@@ -20,6 +20,10 @@ public class UserDetails {
     private String name;
 
     @ManyToOne
+    @JoinColumn(name = "user_id")
+    private User user;
+
+    @ManyToOne
     @JoinColumn(name = "province_id")
     private Province province;
 
@@ -31,8 +35,4 @@ public class UserDetails {
     @JoinColumn(name = "district_id")
     private District district;
 
-    @Lob
-    private String profile_image;
-
-    private String image_type;
 }

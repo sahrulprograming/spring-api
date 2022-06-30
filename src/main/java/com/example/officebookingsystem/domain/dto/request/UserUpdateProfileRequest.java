@@ -7,8 +7,10 @@ import lombok.NoArgsConstructor;
 @Data
 @AllArgsConstructor
 @NoArgsConstructor
-public class CityRequest {
-
+public class UserUpdateProfileRequest {
     private String name;
+    private String email;
     private Long province_id;
+    private Long city_id;
+    private Long district_id;
 }

@@ -7,8 +7,7 @@ import lombok.NoArgsConstructor;
 @Data
 @AllArgsConstructor
 @NoArgsConstructor
-public class CityRequest {
-
-    private String name;
-    private Long province_id;
+public class UploadProfileImageRequest  {
+    private String imageType;
+    private String image;
 }

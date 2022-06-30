@@ -9,6 +9,7 @@ import lombok.NoArgsConstructor;
 public class CityResponse {
     private String name;
     private Long id;
+    private Long province_id;
 
 
 }
