@@ -89,6 +89,6 @@ public class FacilityService {
         if(facilityCategories.isEmpty()){
             return ResponseEntity.status(HttpStatus.NOT_FOUND).body(null);
         }
-        return ResponseEntity.status(HttpStatus.FOUND).body(facilityCategoryResponse);
+        return ResponseEntity.status(HttpStatus.OK).body(facilityCategoryResponse);
     }
 }

@@ -6,6 +6,7 @@ import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.access.method.P;
 import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.*;
 
@@ -17,8 +18,8 @@ public class CityController {
     @Autowired
     private CityService cityService;
 
-    @PostMapping("/city/create/{id}")
-    @ApiOperation(value = "Create City by Province", notes = "Endpoint for adding City to the database by Province Id")
+    @PostMapping("/city/create")
+    @ApiOperation(value = "Create City by Province Id", notes = "Endpoint for adding City to the database by Province Id")
     @PreAuthorize("hasRole('ADMIN')")
     public ResponseEntity<?> createCityByProvince(@RequestBody CityRequest cityRequest) {
         return cityService.createCityByProvinceId(cityRequest);

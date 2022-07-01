@@ -49,6 +49,6 @@ public class CityService {
             return ResponseEntity.status(HttpStatus.NOT_FOUND).body(new MessageResponse(falseResponse));
 
         }
-        return ResponseEntity.status(HttpStatus.FOUND).body(cityRepository.getCitiesByProvinceId(id));
+        return ResponseEntity.status(HttpStatus.OK).body(cityRepository.getCitiesByProvinceId(id));
     }
 }
