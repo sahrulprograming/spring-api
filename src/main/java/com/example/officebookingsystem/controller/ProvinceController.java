@@ -15,6 +15,7 @@ import java.util.List;
 
 @RestController
 @RequestMapping("/api/page/admin")
+@CrossOrigin(origins = "*", maxAge = 3600L)
 @Api(tags = "Admin Managing Provinces API", description = "Provinces")
 public class ProvinceController {
 

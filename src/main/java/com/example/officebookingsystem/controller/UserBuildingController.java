@@ -14,6 +14,7 @@ import java.util.List;
 
 @RestController
 @RequestMapping("/api/page/user/building")
+@CrossOrigin(origins = "*", maxAge = 3600L)
 @Api(tags = "User View Building API", description = "Buildings")
 public class UserBuildingController {
     @Autowired

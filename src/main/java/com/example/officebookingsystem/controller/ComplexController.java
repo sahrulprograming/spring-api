@@ -16,6 +16,7 @@ import java.util.List;
 
 @RestController
 @RequestMapping("api/page/admin")
+@CrossOrigin(origins = "*", maxAge = 3600L)
 @Api(tags = "Admin Managing Complex API", description = "Complexes")
 public class ComplexController {
 

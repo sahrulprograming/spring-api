@@ -18,6 +18,7 @@ import java.util.List;
 
 @RestController
 @RequestMapping("api/page/user")
+@CrossOrigin(origins = "*", maxAge = 3600L)
 @Api(tags = "User Update Profile API", description = "Profiles")
 public class UserUpdateProfileController {
 
