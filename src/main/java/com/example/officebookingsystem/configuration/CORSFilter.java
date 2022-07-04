@@ -15,34 +15,34 @@ import java.util.List;
 import java.util.Optional;
 
 @Component
-@Order(Ordered.HIGHEST_PRECEDENCE)
+//@Order(Ordered.HIGHEST_PRECEDENCE)
 public class CORSFilter implements Filter {
-    @Value("${app.origin:*}")
-    private String origin;
-
-    @Value("${app.production:false}")
-    private boolean production;
-
-    @Override
-    public void init(FilterConfig filterConfig) throws ServletException {
-
-    }
+//    @Value("${app.origin:*}")
+//    private String origin;
+//
+//    @Value("${app.production:false}")
+//    private boolean production;
+//
+//    @Override
+//    public void init(FilterConfig filterConfig) throws ServletException {
+//
+//    }
 
     @Override
     public void doFilter(ServletRequest servletRequest, ServletResponse servletResponse, FilterChain filterChain) throws IOException, ServletException {
         HttpServletResponse response = (HttpServletResponse) servletResponse;
         HttpServletRequest request = (HttpServletRequest) servletRequest;
-        if (production) {
-            List<String> origins = new ArrayList<>(Arrays.asList(origin.split(",")));
-            Optional<String> result = origins
-                    .stream()
-                    .filter(v -> v.equals(request.getHeader("Origin")))
-                    .findFirst();
-            result.ifPresent(s -> response.setHeader("Access-Control-Allow-Origin", s));
-        } else {
-            response.setHeader("Access-Control-Allow-Origin", request.getHeader("Origin"));
-        }
-//        response.setHeader("Access-Control-Allow-Origin", "*");
+//        if (production) {
+//            List<String> origins = new ArrayList<>(Arrays.asList(origin.split(",")));
+//            Optional<String> result = origins
+//                    .stream()
+//                    .filter(v -> v.equals(request.getHeader("Origin")))
+//                    .findFirst();
+//            result.ifPresent(s -> response.setHeader("Access-Control-Allow-Origin", s));
+//        } else {
+//            response.setHeader("Access-Control-Allow-Origin", request.getHeader("Origin"));
+//        }
+        response.setHeader("Access-Control-Allow-Origin", "*");
         response.setHeader("Access-Control-Allow-Credentials", "true");
         response.setHeader("Access-Control-Allow-Methods", "POST, GET, PUT, OPTIONS, PATCH, DELETE");
         response.setHeader("Access-Control-Max-Age", "3600");
