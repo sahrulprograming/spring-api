@@ -15,7 +15,7 @@ public interface CityRepository extends JpaRepository <City, Long>{
 //        @Query(value = "SELECT new com.example.officebookingsystem.domain.dto.response.CityResponse(c.name, c.id) FROM City c")
 //        List<CityResponse> getAllCities();
 
-        List<CityResponse> getCitiesByProvinceId(Long id);
+        List<City> getCitiesByProvinceId(Long id);
 
         
 
