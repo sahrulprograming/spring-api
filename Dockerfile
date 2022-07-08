@@ -9,6 +9,7 @@ COPY target/*.jar app.jar
 
 # Expose PORT
 EXPOSE 8080
+EXPOSE 443
 
 # Run application
 ENTRYPOINT ["java", "-jar", "app.jar"]
