@@ -20,10 +20,7 @@ public class OfficeBookingSystemApplication {
             @Override
             public void addCorsMappings(CorsRegistry registry) {
                 registry.addMapping("/**").allowedOrigins("http://localhost:3000");
-<<<<<<< HEAD
-=======
                 registry.addMapping("/**").allowedOrigins("https://kanbo-web.netlify.app");
->>>>>>> 5c256700a83084414066c4c55e8050cc7b42a571
             }
         };
     }
