@@ -11,7 +11,6 @@ import com.example.officebookingsystem.domain.entity.Facility_Category;
 import com.example.officebookingsystem.domain.repository.BuildingRepository;
 import com.example.officebookingsystem.domain.repository.FacilityCategoryRepository;
 import com.example.officebookingsystem.domain.repository.FacilityRepository;
-import net.bytebuddy.asm.Advice;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -36,13 +35,12 @@ public class FacilityService {
     public ResponseEntity<FacilityCategoryResponse> addCategory(FacilityCategoryCreateRequest facilityCreateRequest) {
         Optional<Building> building = buildingRepository.findById(facilityCreateRequest.getBuilding_id());
 
-        if (!building.isPresent()) {
+        if (building.isEmpty()) {
             return ResponseEntity.status(HttpStatus.NOT_FOUND).body(null);
         }
 
         Facility_Category nearByFacility = new Facility_Category();
         nearByFacility.setName(facilityCreateRequest.getName());
-        nearByFacility.setBuilding(building.get());
         facilityCategoryRepository.save(nearByFacility);
 
         FacilityCategoryResponse facilityCategoryResponse = new FacilityCategoryResponse();
@@ -56,10 +54,10 @@ public class FacilityService {
         Optional<Building> building = buildingRepository.findById(facilityCreateRequest.getBuilding_id());
         Optional<Facility_Category> category = facilityCategoryRepository.findById(facilityCreateRequest.getBuilding_category_id());
 
-        if (!building.isPresent()) {
+        if (building.isEmpty()) {
             return ResponseEntity.status(HttpStatus.NOT_FOUND).body(null);
         }
-        if (!category.isPresent()) {
+        if (category.isEmpty()) {
             return ResponseEntity.status(HttpStatus.NOT_FOUND).body(null);
         }
 
@@ -91,6 +89,6 @@ public class FacilityService {
         if(facilityCategories.isEmpty()){
             return ResponseEntity.status(HttpStatus.NOT_FOUND).body(null);
         }
-        return ResponseEntity.status(HttpStatus.FOUND).body(facilityCategoryResponse);
+        return ResponseEntity.status(HttpStatus.OK).body(facilityCategoryResponse);
     }
 }

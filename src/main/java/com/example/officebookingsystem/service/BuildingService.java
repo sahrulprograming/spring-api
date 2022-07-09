@@ -40,10 +40,12 @@ public class BuildingService {
         building.setName(buildingRequest.getName());
         building.setAddress(buildingRequest.getAddress());
         building.setDescription(buildingRequest.getDescription());
+
         if (buildingRequest.getIdComplex() != null) {
             building.setComplex(complexRepository.findById(buildingRequest.getIdComplex()).get());
         }
-        return ResponseEntity.ok().body(buildingRepository.save(building));
+        buildingRepository.save(building);
+        return ResponseEntity.ok().body(building);
     }
     // Service Find All Buildings
     public ResponseEntity<List<BuildingResponse>> adminFindAll() {

@@ -40,6 +40,6 @@ public class ProvinceService {
         if (provinces.isEmpty())
             return ResponseEntity.status(HttpStatus.NOT_FOUND).body(null);
 
-        return ResponseEntity.status(HttpStatus.FOUND).body(provinces);
+        return ResponseEntity.status(HttpStatus.OK).body(provinces);
     }
 }

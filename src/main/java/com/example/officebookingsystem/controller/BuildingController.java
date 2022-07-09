@@ -12,14 +12,7 @@ import com.example.officebookingsystem.service.FacilityService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.access.prepost.PreAuthorize;
-import org.springframework.web.bind.annotation.DeleteMapping;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.PutMapping;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 import com.example.officebookingsystem.domain.dto.request.BuildingRequest;
 import com.example.officebookingsystem.domain.dto.response.BuildingResponse;
@@ -31,6 +24,7 @@ import io.swagger.annotations.ApiOperation;
 
 @RestController
 @RequestMapping("/api/page")
+@CrossOrigin(origins = "*", maxAge = 3600L)
 @Api(tags = "Admin Managing Building API", description = "Buildings")
 public class BuildingController {
     @Autowired
@@ -42,7 +36,7 @@ public class BuildingController {
     // Create buildings
     @ApiOperation(value = "Create Building", notes = "Endpoint for admin creating building")
     @PostMapping("/admin/building/create")
-    // @PreAuthorize("hasRole('ADMIN')")
+    @PreAuthorize("hasRole('ADMIN')")
     public ResponseEntity<?> createBuilding(@Valid @RequestBody BuildingRequest buildingRequest) {
         return buildingService.create(buildingRequest);
     }
@@ -88,11 +82,18 @@ public class BuildingController {
         return buildingService.deleteOne(id);
     }
 
-    @PostMapping("admin/building/facility/category")
+    @PostMapping("/admin/building/facility/category")
     @ApiOperation(value = "Add Nearby Facility Category", notes = "Endpoint for Adding Facility Category for The Building")
     @PreAuthorize("hasRole('ADMIN')")
     public ResponseEntity<FacilityCategoryResponse> addFacilityCategory(@Valid@RequestBody FacilityCategoryCreateRequest facilityCategoryCreateRequest){
         return facilityService.addCategory(facilityCategoryCreateRequest);
+    }
+
+    @GetMapping("/admin/building/facility/category/findAll")
+    @ApiOperation(value = "List all Facility Category", notes = "Endpoint for Listing All Facility Category")
+    @PreAuthorize("hasRole('ADMIN')")
+    public ResponseEntity<List<FacilityCategoryResponse>> findAllCategory(){
+        return facilityService.listFacilityCategories();
     }
 
     @PostMapping("admin/building/facility/create")

@@ -10,6 +10,7 @@ import org.springframework.web.bind.annotation.*;
 
 @RestController
 @RequestMapping("api/page/admin")
+@CrossOrigin(origins = "*", maxAge = 3600L)
 @Api(tags = "Admin Managing Districts API", description = "Districts")
 public class DistrictController {
 
