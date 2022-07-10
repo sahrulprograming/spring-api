@@ -5,5 +5,4 @@ import lombok.Data;
 @Data
 public class FacilityCategoryCreateRequest {
     private String name;
-    private Long building_id;
 }

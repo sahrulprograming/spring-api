@@ -39,6 +39,8 @@ public class Room {
 
     private String description;
 
+    @Enumerated(EnumType.STRING)
+    @Column(length = 20)
     private EStatus status;
 
     @Lob
