@@ -8,6 +8,7 @@ import com.example.officebookingsystem.domain.dto.request.FacilityCategoryCreate
 import com.example.officebookingsystem.domain.dto.request.FacilityCreateRequest;
 import com.example.officebookingsystem.domain.dto.response.FacilityCategoryResponse;
 import com.example.officebookingsystem.domain.dto.response.FacilityResponse;
+import com.example.officebookingsystem.domain.entity.Facility_Category;
 import com.example.officebookingsystem.service.FacilityService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
@@ -25,7 +26,7 @@ import io.swagger.annotations.ApiOperation;
 @RestController
 @RequestMapping("/api/page")
 @CrossOrigin(origins = "*", maxAge = 3600L)
-@Api(tags = "Admin Managing Building API", description = "Buildings")
+@Api(tags = "Admin Managing Building and Facility API", description = "Buildings")
 public class BuildingController {
     @Autowired
     private BuildingService buildingService;
@@ -85,21 +86,16 @@ public class BuildingController {
     @PostMapping("/admin/building/facility/category")
     @ApiOperation(value = "Add Nearby Facility Category", notes = "Endpoint for Adding Facility Category for The Building")
     @PreAuthorize("hasRole('ADMIN')")
-    public ResponseEntity<FacilityCategoryResponse> addFacilityCategory(@Valid@RequestBody FacilityCategoryCreateRequest facilityCategoryCreateRequest){
+    public ResponseEntity<Facility_Category> addFacilityCategory(@Valid@RequestBody FacilityCategoryCreateRequest facilityCategoryCreateRequest){
         return facilityService.addCategory(facilityCategoryCreateRequest);
     }
 
     @GetMapping("/admin/building/facility/category/findAll")
     @ApiOperation(value = "List all Facility Category", notes = "Endpoint for Listing All Facility Category")
     @PreAuthorize("hasRole('ADMIN')")
-    public ResponseEntity<List<FacilityCategoryResponse>> findAllCategory(){
+    public ResponseEntity<List<Facility_Category>> findAllCategory(){
         return facilityService.listFacilityCategories();
     }
 
-    @PostMapping("admin/building/facility/create")
-    @ApiOperation(value = "Add Nearby Facility by Category", notes = "Endpoint for Adding Facility for The Building")
-    @PreAuthorize("hasRole('ADMIN')")
-    public ResponseEntity<FacilityResponse> addFacility(@Valid@RequestBody FacilityCreateRequest facilityCreateRequest){
-        return facilityService.addFacility(facilityCreateRequest);
-    }
+
 }

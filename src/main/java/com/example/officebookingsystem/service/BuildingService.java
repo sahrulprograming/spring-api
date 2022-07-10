@@ -6,6 +6,10 @@ import java.util.Optional;
 
 import javax.transaction.Transactional;
 
+import com.example.officebookingsystem.domain.dto.request.FacilityCreateRequest;
+import com.example.officebookingsystem.domain.entity.Facility;
+import com.example.officebookingsystem.domain.entity.Facility_Category;
+import com.example.officebookingsystem.domain.repository.*;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -15,9 +19,6 @@ import com.example.officebookingsystem.domain.dto.request.BuildingRequest;
 import com.example.officebookingsystem.domain.dto.response.BuildingResponse;
 import com.example.officebookingsystem.domain.dto.response.MessageResponse;
 import com.example.officebookingsystem.domain.entity.Building;
-import com.example.officebookingsystem.domain.repository.BuildingRepository;
-import com.example.officebookingsystem.domain.repository.ComplexRepository;
-import com.example.officebookingsystem.domain.repository.RoomRepository;
 
 @Service
 @Transactional
@@ -31,6 +32,12 @@ public class BuildingService {
     @Autowired
     private RoomRepository roomRepository;
 
+    @Autowired
+    private FacilityCategoryRepository facilityCategoryRepository;
+
+    @Autowired
+    private FacilityRepository facilityRepository;
+
     // Service Create Building
     public ResponseEntity<?> create(BuildingRequest buildingRequest) {
         if (buildingRepository.existsByName(buildingRequest.getName())) {
@@ -39,13 +46,33 @@ public class BuildingService {
         Building building = new Building();
         building.setName(buildingRequest.getName());
         building.setAddress(buildingRequest.getAddress());
-        building.setDescription(buildingRequest.getDescription());
-
         if (buildingRequest.getIdComplex() != null) {
             building.setComplex(complexRepository.findById(buildingRequest.getIdComplex()).get());
         }
+        building.setDescription(buildingRequest.getDescription());
+        building.setBuilding_image(buildingRequest.getBuildingImage());
+        building.setImage_type(buildingRequest.getImageType());
         buildingRepository.save(building);
-        return ResponseEntity.ok().body(building);
+
+
+        Facility facility = new Facility();
+        List<FacilityCreateRequest> facilityRequest = buildingRequest.getFacilities();
+
+        for(FacilityCreateRequest f : facilityRequest){
+            Optional<Building> buildingOptional = buildingRepository.findById(building.getId());
+            Optional<Facility_Category> facility_category = facilityCategoryRepository.findById(f.getFacility_category_id());
+            if(!facility_category.isPresent()){
+                return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(new MessageResponse("Facility Category With " + facility_category.get() + "Doesn't Exist"));
+            }
+            facility.setBuilding(buildingOptional.get());
+            facility.setId(building.getId());
+            facility.setName(f.getFacility_name());
+            facility.setFacility_category(facility_category.get());
+            facility.setDistance(f.getDistance());
+            facility.setDuration(f.getDuration());
+            facilityRepository.save(facility);
+        }
+        return ResponseEntity.status(HttpStatus.CREATED).body(buildingRequest);
     }
     // Service Find All Buildings
     public ResponseEntity<List<BuildingResponse>> adminFindAll() {
@@ -58,7 +85,7 @@ public class BuildingService {
                 // mengambil nama complex berdasarkan index building
                 br.setComplexName(b.getComplex().getComplexName());
                 // mengambil alamat pada complex berdasarkan index building
-                br.setComplexAdress(b.getComplex().getAddress());
+                br.setAddress(b.getComplex().getAddress());
 
                 br.setId(b.getId());
             }
