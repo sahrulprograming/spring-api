@@ -39,4 +39,5 @@ public class Building {
         private String image_type;
 
 
+
 }

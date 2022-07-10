@@ -1,6 +1,5 @@
 package com.example.officebookingsystem.controller;
 
-import com.example.officebookingsystem.domain.dto.response.ResponseData;
 import com.example.officebookingsystem.domain.dto.response.UserResponseBuilding;
 import com.example.officebookingsystem.service.UserBuildingService;
 import io.swagger.annotations.Api;
