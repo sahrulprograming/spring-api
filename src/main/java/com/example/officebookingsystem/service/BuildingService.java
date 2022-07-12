@@ -7,6 +7,7 @@ import java.util.Optional;
 import javax.transaction.Transactional;
 
 import com.example.officebookingsystem.domain.dto.request.FacilityCreateRequest;
+import com.example.officebookingsystem.domain.dto.response.FacilityResponse;
 import com.example.officebookingsystem.domain.entity.Facility;
 import com.example.officebookingsystem.domain.entity.Facility_Category;
 import com.example.officebookingsystem.domain.repository.*;
@@ -85,7 +86,7 @@ public class BuildingService {
                 // mengambil nama complex berdasarkan index building
                 br.setComplexName(b.getComplex().getComplexName());
                 // mengambil alamat pada complex berdasarkan index building
-                br.setAddress(b.getComplex().getAddress());
+                br.setAddress(b.getAddress());
 
                 br.setId(b.getId());
             }
@@ -95,6 +96,19 @@ public class BuildingService {
                 br.setNumOfRooms(numOfRooms);
             }
             br.setDescription(b.getDescription());
+            List <Facility> facilities = facilityRepository.getFacilitiesByBuildingId(b.getId());
+            List <FacilityResponse> facilityResponses = new ArrayList<>();
+            for(Facility facility: facilities){
+                FacilityResponse facilityResponse = new FacilityResponse();
+                facilityResponse.setName(facility.getName());
+                facilityResponse.setDuration(facility.getDuration());
+                facilityResponse.setDistance(facility.getDistance());
+                facilityResponse.setCategoryId(facility.getFacility_category().getId());
+                facilityResponses.add(facilityResponse);
+            }
+            br.setFacilityResponseList(facilityResponses);
+            br.setBase64Image(b.getBuilding_image());
+            br.setImageType(b.getImage_type());
             buildingResponse.add(br);
         }
         if (building.isEmpty()) {
@@ -102,6 +116,8 @@ public class BuildingService {
         }
         return ResponseEntity.status(HttpStatus.OK).body(buildingResponse);
     }
+
+
 
     // Service Get Building By Id
     public ResponseEntity<Building> findById(Long id) {

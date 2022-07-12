@@ -7,5 +7,5 @@ public class FacilityResponse {
     private String name;
     private Float distance;
     private Integer duration;
-    private String building_name;
+    private Long categoryId;
 }

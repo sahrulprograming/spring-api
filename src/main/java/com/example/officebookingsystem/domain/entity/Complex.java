@@ -29,6 +29,10 @@ public class Complex {
         @JoinColumn(name = "district_id")
         private District district;
 
+        @ManyToOne
+        @JoinColumn(name = "province_id")
+        private Province province;
+
         @NotBlank
         private String complexName;
 

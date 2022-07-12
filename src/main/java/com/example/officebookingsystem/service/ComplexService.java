@@ -5,10 +5,8 @@ import com.example.officebookingsystem.domain.dto.response.MessageResponse;
 import com.example.officebookingsystem.domain.entity.City;
 import com.example.officebookingsystem.domain.entity.Complex;
 import com.example.officebookingsystem.domain.entity.District;
-import com.example.officebookingsystem.domain.repository.BuildingRepository;
-import com.example.officebookingsystem.domain.repository.CityRepository;
-import com.example.officebookingsystem.domain.repository.ComplexRepository;
-import com.example.officebookingsystem.domain.repository.DistrictRepository;
+import com.example.officebookingsystem.domain.entity.Province;
+import com.example.officebookingsystem.domain.repository.*;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -33,14 +31,30 @@ public class ComplexService {
     @Autowired
     private BuildingRepository buildingRepository;
 
+    @Autowired
+    private ProvinceRepository provinceRepository;
 
-    public ResponseEntity<ComplexCreateRequest> createComplex(ComplexCreateRequest complexCreateRequest){
+
+    public ResponseEntity<?> createComplex(ComplexCreateRequest complexCreateRequest){
         Optional<City> optionalCity = cityRepository.findById(complexCreateRequest.getCity_id());
         Optional<District> optionalDistrict = districtRepository.findById(complexCreateRequest.getDistrict_id());
-
+        Optional<Province> optionalProvince = provinceRepository.findById(complexCreateRequest.getProvince_id());
         if(complexRepository.existsByComplexName(complexCreateRequest.getComplex_name())){
-            // String errorResponse = String.format("Complex with the name %s is already taken", complexCreateRequest.getComplex_name());
-            return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(null);
+             String errorResponse = String.format("Complex with the name %s is already taken", complexCreateRequest.getComplex_name());
+             return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(new MessageResponse(errorResponse));
+        }
+
+        if(optionalCity.isEmpty()){
+            String cityErrorResponse = String.format("City with id %s doesn't exists", complexCreateRequest.getCity_id());
+            return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(new MessageResponse(cityErrorResponse));
+        }
+        if(optionalDistrict.isEmpty()){
+            String districtErrorResponse = String.format("District with id %s doesn't exists", complexCreateRequest.getDistrict_id());
+            return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(new MessageResponse(districtErrorResponse));
+        }
+        if(optionalProvince.isEmpty()){
+            String provinceErrorResponse = String.format("Province with id %s doesn't exists", complexCreateRequest.getProvince_id());
+            return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(new MessageResponse(provinceErrorResponse));
         }
 
         Complex complex = new Complex();
@@ -48,6 +62,7 @@ public class ComplexService {
         complex.setAddress(complexCreateRequest.getStreet());
         complex.setCity(optionalCity.get());
         complex.setDistrict(optionalDistrict.get());
+        complex.setProvince(optionalProvince.get());
         complexRepository.save(complex);
         return ResponseEntity.status(HttpStatus.CREATED).body(complexCreateRequest);
     }

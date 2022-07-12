@@ -25,7 +25,7 @@ public class ComplexController {
     @PostMapping("/complex/create")
     @ApiOperation(value = "Create Complex", notes = "Endpoint for Creating Complex by City and District")
     @PreAuthorize("hasRole('ADMIN')")
-    public ResponseEntity<ComplexCreateRequest> createComplex(@RequestBody ComplexCreateRequest complexCreateRequest){
+    public ResponseEntity<?> createComplex(@RequestBody ComplexCreateRequest complexCreateRequest){
         return complexService.createComplex(complexCreateRequest);
     }
     @GetMapping("complex/findAll")
