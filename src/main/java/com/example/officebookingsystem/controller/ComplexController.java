@@ -45,7 +45,7 @@ public class ComplexController {
     @PutMapping("complex/update/{id}")
     @ApiOperation(value = "Update Complex ", notes = "Endpoint for update complex by id ")
     @PreAuthorize("hasRole('ADMIN')")
-    public ResponseEntity<Complex> updateComplex(@PathVariable("id") Long id, @Valid @RequestBody ComplexCreateRequest complexCreateRequest){
+    public ResponseEntity<?> updateComplex(@PathVariable("id") Long id, @Valid @RequestBody ComplexCreateRequest complexCreateRequest){
         return complexService.update(id,complexCreateRequest);
     }
 }

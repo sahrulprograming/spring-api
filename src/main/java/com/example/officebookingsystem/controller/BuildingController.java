@@ -4,6 +4,7 @@ import java.util.List;
 
 import javax.validation.Valid;
 
+import com.example.officebookingsystem.domain.dto.request.BuildingUpdateRequest;
 import com.example.officebookingsystem.domain.dto.request.FacilityCategoryCreateRequest;
 import com.example.officebookingsystem.domain.dto.request.FacilityCreateRequest;
 import com.example.officebookingsystem.domain.dto.response.FacilityCategoryResponse;
@@ -70,8 +71,8 @@ public class BuildingController {
     @ApiOperation(value = "Update Building", notes = "Endpoint for admin update building")
     @PutMapping("/admin/building/{id}")
     @PreAuthorize("hasRole('ADMIN')")
-    public ResponseEntity<Building> updateBuilding(@PathVariable("id") Long id,
-            @Valid @RequestBody BuildingRequest buildingRequest) {
+    public ResponseEntity<?> updateBuilding(@PathVariable("id") Long id,
+            @Valid @RequestBody BuildingUpdateRequest buildingRequest) {
         return buildingService.update(id, buildingRequest);
     }
 

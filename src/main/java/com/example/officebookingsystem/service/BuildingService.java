@@ -6,7 +6,9 @@ import java.util.Optional;
 
 import javax.transaction.Transactional;
 
+import com.example.officebookingsystem.domain.dto.request.BuildingUpdateRequest;
 import com.example.officebookingsystem.domain.dto.request.FacilityCreateRequest;
+import com.example.officebookingsystem.domain.dto.request.FacilityRequestUpdate;
 import com.example.officebookingsystem.domain.dto.response.FacilityResponse;
 import com.example.officebookingsystem.domain.entity.Facility;
 import com.example.officebookingsystem.domain.entity.Facility_Category;
@@ -105,6 +107,7 @@ public class BuildingService {
                 facilityResponse.setDistance(facility.getDistance());
                 facilityResponse.setCategoryId(facility.getFacility_category().getId());
                 facilityResponses.add(facilityResponse);
+                facilityResponse.setFacilityId(facility.getId());
             }
             br.setFacilityResponseList(facilityResponses);
             br.setBase64Image(b.getBuilding_image());
@@ -129,23 +132,41 @@ public class BuildingService {
     }
 
     // Service Update Building
-    public ResponseEntity<Building> update(Long id, BuildingRequest buildingRequest) {
+    public ResponseEntity<?> update(Long id, BuildingUpdateRequest buildingRequest) {
         Optional<Building> building = buildingRepository.findById(id);
-        if (building == null) {
-            return ResponseEntity.status(HttpStatus.NOT_FOUND).body(null);
+        if (building.isEmpty()) {
+            return ResponseEntity.status(HttpStatus.NOT_FOUND).body(new MessageResponse("BUilding Doesn't Exists"));
         }
+
+        if (buildingRequest.getIdComplex() != null) {
+            building.get().setDescription(buildingRequest.getDescription());
+        }
+
+        if(complexRepository.findById(buildingRequest.getIdComplex()).isEmpty()){
+            return ResponseEntity.status(HttpStatus.NOT_FOUND).body(new MessageResponse("Complex Doesnt Exists"));
+        }
+        building.get().setComplex(complexRepository.findById(buildingRequest.getIdComplex()).get());
         building.get().setName(buildingRequest.getName());
         building.get().setAddress(buildingRequest.getAddress());
+        building.get().setBuilding_image(buildingRequest.getBuildingImage());
+        building.get().setImage_type(buildingRequest.getImageType());
         building.get().setDescription(buildingRequest.getDescription());
-        if (buildingRequest.getIdComplex() != null) {
-            building.get().setComplex(complexRepository.findById(buildingRequest.getIdComplex()).get());
+
+        List<FacilityRequestUpdate> facilityUpdateRequest = buildingRequest.getFacilities();
+        for(FacilityRequestUpdate facilityUpdate: facilityUpdateRequest){
+            Optional<Facility> facility = facilityRepository.findById(facilityUpdate.getFacilityId());
+            facility.get().setFacility_category(facilityCategoryRepository.findById(facilityUpdate.getFacility_category_id()).get());
+            facility.get().setDuration(facilityUpdate.getDuration());
+            facility.get().setName(facilityUpdate.getFacility_name());
+            facility.get().setDistance(facilityUpdate.getDistance());
         }
-        return ResponseEntity.status(HttpStatus.OK).body(building.get());
+
+        return ResponseEntity.status(HttpStatus.OK).body(buildingRequest);
     }
 
     // Service deleteOne Building
     public ResponseEntity<?> deleteOne(Long id) {
-        if (buildingRepository.existsById(id) == false) {
+        if (buildingRepository.findById(id).isEmpty()) {
             return ResponseEntity.status(HttpStatus.NOT_FOUND)
                     .body(new MessageResponse("Error:Building with id " + id + " not found"));
         }

@@ -15,4 +15,5 @@ public interface ComplexRepository extends JpaRepository<Complex, Long> {
 //            "INNER JOIN District d on d.id = c.district.id INNER JOIN Building b on b.complex.id = c.id " +
 //            "GROUP BY c.id, c.complexName, c.address, s.name, d.name")
 //    List<ComplexResponse> getAllComplex();
+    ;
 }

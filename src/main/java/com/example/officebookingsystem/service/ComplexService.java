@@ -93,24 +93,32 @@ public class ComplexService {
     }
 
     public ResponseEntity<?> deleteById(Long id){
-        if(complexRepository.existsById(id)== false){
+        if(complexRepository.findById(id).isEmpty()){
             return ResponseEntity.status(HttpStatus.NOT_FOUND).body(new MessageResponse("ERROR : building with " + id + "doesn't exists"));
         }
         complexRepository.deleteById(id);
-        return ResponseEntity.status(HttpStatus.OK).body(new MessageResponse("Complex successfully created"));
+        return ResponseEntity.status(HttpStatus.OK).body(new MessageResponse("Complex successfully deleted"));
     }
 
-    public ResponseEntity<Complex> update(Long id, ComplexCreateRequest complexCreateRequest) {
+    public ResponseEntity<?> update(Long id, ComplexCreateRequest complexCreateRequest) {
         Optional<Complex> complex = complexRepository.findById(id);
-        if (complex == null) {
-            return ResponseEntity.status(HttpStatus.NOT_FOUND).body(null);
+        if (complex.isEmpty()) {
+            return ResponseEntity.status(HttpStatus.NOT_FOUND).body(new MessageResponse("Complex Doesn't exist"));
         }
         complex.get().setComplexName(complexCreateRequest.getComplex_name());
         complex.get().setAddress(complexCreateRequest.getStreet());
 
-        if (districtRepository.getById(id) != null) {
-            complex.get().setDistrict(districtRepository.findById(complexCreateRequest.getDistrict_id()).get());
+        if (districtRepository.findById(complexCreateRequest.getDistrict_id()).isEmpty()) {
+           return ResponseEntity.status(HttpStatus.NOT_FOUND).body(new MessageResponse("district Doesn't Exist"));
         }
+
+        if(provinceRepository.findById(complexCreateRequest.getProvince_id()).isEmpty()){
+            return ResponseEntity.status(HttpStatus.NOT_FOUND).body(new MessageResponse("Province Doesn't Exists"));
+        }
+
+
+        complex.get().setDistrict(districtRepository.findById(complexCreateRequest.getDistrict_id()).get());
+        complex.get().setProvince(provinceRepository.findById(complexCreateRequest.getProvince_id()).get());
         return ResponseEntity.status(HttpStatus.OK).body(complex.get());
     }
 }

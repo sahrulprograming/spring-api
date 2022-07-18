@@ -8,4 +8,5 @@ public class FacilityResponse {
     private Float distance;
     private Integer duration;
     private Long categoryId;
+    private Long facilityId;
 }
