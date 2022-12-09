@@ -134,7 +134,7 @@ public class BuildingService {
     // Service Update Building
     public ResponseEntity<?> update(Long id, BuildingUpdateRequest buildingRequest) {
         Optional<Building> building = buildingRepository.findById(id);
-        if (building.isEmpty()) {
+        if (!building.isPresent()) {
             return ResponseEntity.status(HttpStatus.NOT_FOUND).body(new MessageResponse("BUilding Doesn't Exists"));
         }
 
@@ -142,7 +142,7 @@ public class BuildingService {
             building.get().setDescription(buildingRequest.getDescription());
         }
 
-        if(complexRepository.findById(buildingRequest.getIdComplex()).isEmpty()){
+        if(!complexRepository.findById(buildingRequest.getIdComplex()).isPresent()){
             return ResponseEntity.status(HttpStatus.NOT_FOUND).body(new MessageResponse("Complex Doesnt Exists"));
         }
         building.get().setComplex(complexRepository.findById(buildingRequest.getIdComplex()).get());
@@ -166,7 +166,7 @@ public class BuildingService {
 
     // Service deleteOne Building
     public ResponseEntity<?> deleteOne(Long id) {
-        if (buildingRepository.findById(id).isEmpty()) {
+        if (!buildingRepository.findById(id).isPresent()) {
             return ResponseEntity.status(HttpStatus.NOT_FOUND)
                     .body(new MessageResponse("Error:Building with id " + id + " not found"));
         }

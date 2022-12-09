@@ -29,7 +29,7 @@ public class CityService {
             String errorResponse = String.format("City with the name %s is already taken", cityRequest.getName());
             return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(new MessageResponse(errorResponse));
         }
-        if(province.isEmpty()){
+        if(!province.isPresent()){
             String falseResponse = String.format("Province with id %s doesn't exist", cityRequest.getProvince_id());
             return ResponseEntity.status(HttpStatus.NOT_FOUND).body(new MessageResponse(falseResponse));
         }
@@ -44,7 +44,7 @@ public class CityService {
     }
 
     public ResponseEntity<?> listCityByProvinceId(Long id){
-        if(provinceRepository.findById(id).isEmpty()){
+        if(!provinceRepository.findById(id).isPresent()){
             String falseResponse = String.format("Province with id %s doesn't exist", id);
             return ResponseEntity.status(HttpStatus.NOT_FOUND).body(new MessageResponse(falseResponse));
 
